@@ -1,0 +1,170 @@
+---
+/**
+ * ThreePillars · sección que aparece justo después del hero.
+ * 3 cards grandes con imagen, horario, descripción y CTA — sub-paleta oficial
+ * por categoría (desayuno verde, tapas terracota, street food amarillo).
+ */
+import Logo from '@components/ui/Logo.astro';
+// Los textos en español son el render inicial (SSR · sin JS).
+// El runtime cliente los reemplaza vía data-i18n con las claves del modelo 11.
+const pillars = [
+  {
+    num: '01',
+    horario: '08:00 – 12:00',
+    title: 'Desayuno',
+    alt: 'Desayuno con tostadas de chapata, café y montaditos calientes en Bocatitos Sevilla',
+    desc: 'Tostadas de chapata recién horneada, café de especialidad y montaditos calientes.',
+    cta: 'Solo en local',
+    href: '/carta#desayuno',
+    image: 'https://images.unsplash.com/photo-1525351484163-7529414344d8?w=900&q=85&auto=format&fit=crop',
+    accent: 'desayuno',
+    i18nTitle: 'pillar.1.title',
+    i18nDesc:  'pillar.1.desc',
+    i18nCta:   'pillar.1.cta',
+    i18nHours: 'pillar.1.hours',
+  },
+  {
+    num: '02',
+    horario: '12:00 – 17:00',
+    title: 'Tapas',
+    alt: 'Tapas y montaditos caseros — croquetas, pinchos y la tapa del día en Bocatitos Sevilla',
+    desc: 'La tapa del día, croquetas caseras, montaditos calientes. La parada obligada del barrio.',
+    cta: 'A la mesa · A domicilio',
+    href: '/carta#tapa',
+    image: 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=900&q=85&auto=format&fit=crop',
+    accent: 'tapas',
+    i18nTitle: 'pillar.2.title',
+    i18nDesc:  'pillar.2.desc',
+    i18nCta:   'pillar.2.cta',
+    i18nHours: 'pillar.2.hours',
+  },
+  {
+    num: '03',
+    horario: '19:00 – 00:00',
+    title: 'Street Food',
+    alt: 'Smash burgers, bocatas en chapata y hot dogs — street food en Bocatitos Sevilla',
+    desc: 'Smash burgers, bocatas en chapata y hot dogs. 17 recetas firmadas, salsas de la casa.',
+    cta: 'A la mesa · A domicilio',
+    href: '/carta#smash',
+    image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=900&q=85&auto=format&fit=crop',
+    accent: 'streetfood',
+    i18nTitle: 'pillar.3.title',
+    i18nDesc:  'pillar.3.desc',
+    i18nCta:   'pillar.3.cta',
+    i18nHours: 'pillar.3.hours',
+  },
+];
+---
+
+<section class="three-pillars bg-darker text-white py-2xl" aria-labelledby="tp-h">
+  <div class="wrap">
+    <div class="head text-center mb-xl">
+      <div class="inline-flex items-center justify-center mb-md">
+        <Logo size="xs" alt="" />
+      </div>
+      <p class="font-condensed text-yellow text-lg tracking-widest uppercase inline-flex items-center gap-xs">
+        <span aria-hidden="true" class="inline-block w-10 h-[2px] bg-yellow"></span>
+        <span data-i18n="pillars.eyebrow">3 pilares · 1 local</span>
+        <span aria-hidden="true" class="inline-block w-10 h-[2px] bg-yellow"></span>
+      </p>
+      <h2 id="tp-h" class="font-display uppercase mt-md leading-[0.95] text-[clamp(2rem,5.5vw,4rem)]" data-i18n-html="pillars.title">
+        Tres planes, <em class="text-red not-italic">un mismo local.</em>
+      </h2>
+      <p class="mt-md text-white/75 max-w-2xl mx-auto text-lg" data-i18n="pillars.lead">
+        Por la mañana el café y la tostada. Al mediodía la tapa. Por la noche el street food.
+        Mismo barrio, mismo cariño.
+      </p>
+    </div>
+
+    <ul class="grid gap-md md:grid-cols-3" role="list">
+      {
+        pillars.map((p) => (
+          <li>
+            <a
+              href={p.href}
+              class={`pillar-card pillar-card--${p.accent} group relative block aspect-[4/5] overflow-hidden bg-dark border-2 border-white/10 transition-all duration-base ease-out-expo`}
+            >
+              <img
+                src={p.image}
+                alt={p.alt}
+                width="600"
+                height="750"
+                loading="lazy"
+                decoding="async"
+                class="absolute inset-0 w-full h-full object-cover transition-transform duration-slow ease-out-expo group-hover:scale-105"
+              />
+              <span class="pillar-overlay absolute inset-0 pointer-events-none" aria-hidden="true" />
+
+              <div class="absolute inset-0 p-md md:p-lg flex flex-col justify-between">
+                <div class="flex items-center justify-between">
+                  <span class="font-condensed text-base tracking-widest uppercase text-white/90 bg-black/40 backdrop-blur px-xs py-2xs">
+                    {p.num}
+                  </span>
+                  <span class="font-condensed text-xs tracking-widest uppercase text-white/85 bg-black/40 backdrop-blur px-xs py-2xs border border-white/15" data-i18n={p.i18nHours}>
+                    {p.horario}
+                  </span>
+                </div>
+
+                <div>
+                  <h3 class="font-display uppercase text-[clamp(2rem,4vw,3rem)] leading-none" data-i18n={p.i18nTitle}>{p.title}</h3>
+                  <p class="mt-2xs text-sm font-condensed tracking-widest uppercase text-white/80" data-i18n={p.i18nCta}>{p.cta}</p>
+                  <p class="mt-xs text-sm text-white/85 max-w-xs leading-snug" data-i18n={p.i18nDesc}>{p.desc}</p>
+                  <span class="mt-md inline-flex items-center gap-2xs font-condensed text-sm tracking-widest uppercase pillar-cta">
+                    <span data-i18n="pillar.see">Ver carta</span>
+                    <span aria-hidden="true" class="transition-transform group-hover:translate-x-1">→</span>
+                  </span>
+                </div>
+              </div>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  /* Overlay base · degradado para legibilidad del texto */
+  .pillar-overlay {
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.25) 0%,
+      rgba(0, 0, 0, 0.55) 55%,
+      rgba(0, 0, 0, 0.9) 100%
+    );
+    transition: background var(--duration-base) var(--ease-out-expo);
+  }
+
+  .pillar-card:hover {
+    transform: translateY(-6px);
+  }
+
+  /* Tinta de overlay y CTA según sub-paleta */
+  .pillar-card--desayuno:hover {
+    border-color: var(--cat-desayuno-soft);
+  }
+  .pillar-card--desayuno:hover .pillar-overlay {
+    background: linear-gradient(180deg, rgba(45,74,43,0.25) 0%, rgba(0,0,0,0.6) 55%, rgba(0,0,0,0.92) 100%);
+  }
+  .pillar-card--desayuno .pillar-cta { color: var(--cat-desayuno-accent); }
+
+  .pillar-card--tapas:hover {
+    border-color: var(--cat-tapas-soft);
+  }
+  .pillar-card--tapas:hover .pillar-overlay {
+    background: linear-gradient(180deg, rgba(200,85,61,0.28) 0%, rgba(0,0,0,0.6) 55%, rgba(0,0,0,0.92) 100%);
+  }
+  .pillar-card--tapas .pillar-cta { color: var(--cat-tapas-soft); }
+
+  .pillar-card--streetfood:hover {
+    border-color: var(--cat-streetfood);
+  }
+  .pillar-card--streetfood:hover .pillar-overlay {
+    background: linear-gradient(180deg, rgba(255,184,0,0.22) 0%, rgba(0,0,0,0.55) 55%, rgba(0,0,0,0.92) 100%);
+  }
+  .pillar-card--streetfood .pillar-cta { color: var(--cat-streetfood); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pillar-card:hover { transform: none; }
+  }
+</style>

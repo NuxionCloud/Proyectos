@@ -1,0 +1,27 @@
+{
+  "direccion": "Av. Sánchez Pizjuán 6",
+  "codigoPostal": "41009",
+  "ciudad": "Sevilla",
+  "pais": "España",
+  "telefono": "+34 641 29 36 69",
+  "whatsapp": "34641293669",
+  "email": "hola@bocatitos.es",
+  "instagram": "bocatitosf",
+  "facebook": "bocatitosf",
+  "tiktok": "bocatitosf",
+  "youtube": "bocatitosf",
+  "spotify": "31owrjaygxm6ebzz5bakeno7533a",
+  "barrio": "Distrito Macarena",
+  "latitude": 37.4081349,
+  "longitude": -5.9881152,
+  "horario": {
+    "lunes": "08:00 – 16:00",
+    "martes": "08:00 – 16:00",
+    "miercoles": "08:00 – 16:00 · 19:30 – 23:30",
+    "jueves": "08:00 – 16:00 · 19:30 – 23:30",
+    "viernes": "08:00 – 16:00 · 19:30 – 23:30",
+    "sabado": "13:00 – 16:00 · 19:30 – 23:30",
+    "domingo": "13:00 – 16:00 · 19:30 – 23:30"
+  },
+  "mapaLink": "https://maps.google.com/?q=Av.+S%C3%A1nchez+Pizju%C3%A1n+6+Sevilla"
+}

@@ -1,0 +1,197 @@
+---
+/**
+ * /carta · listado completo de los 23 platos con tabs por sub-familia.
+ * Sub-familias visibles: Todos · Smash · Bocata · Hot Dog · Desayuno · Tapa.
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+
+const all = [
+  ...(await getCollection('street-food')),
+  ...(await getCollection('desayunos')),
+  ...(await getCollection('tapas')),
+].sort((a, b) => (a.data.orden ?? 99) - (b.data.orden ?? 99));
+
+const baseLabel: Record<string, string> = {
+  brioche: 'Pan brioche de patata',
+  ciabatta: 'Chapata recién horneada',
+  bun: 'Pan de hot dog brioche',
+  plato: 'Recién hechas',
+};
+
+const subFamilias = [
+  { id: 'todos',    label: 'Todos',        i18n: 'cat.todos',  filter: (_d: any) => true },
+  { id: 'smash',    label: 'Smash Burgers', i18n: 'cat.smash',  filter: (d: any) => d.data.subcategoria === 'smash' },
+  { id: 'bocata',   label: 'Bocatas',      i18n: 'cat.bocata', filter: (d: any) => d.data.subcategoria === 'bocata' },
+  { id: 'hotdog',   label: 'Hot Dogs',     i18n: 'cat.hotdog', filter: (d: any) => d.data.subcategoria === 'hotdog' },
+  { id: 'desayuno', label: 'Desayuno',     i18n: 'cat.brk',    filter: (d: any) => d.data.subcategoria === 'desayuno' },
+  { id: 'tapa',     label: 'Tapas',        i18n: 'cat.tapa',   filter: (d: any) => d.data.subcategoria === 'tapa' },
+];
+---
+
+<BaseLayout
+  title="Carta"
+  description="17 recetas firmadas en 5 familias: smash burgers, bocatas en chapata, hot dogs, desayuno y tapas. Sin precios online — pregúntanos por WhatsApp."
+  ogImage="/og-carta.jpg"
+>
+  <main id="main" class="bg-black text-white">
+    <!-- Page head -->
+    <section class="bg-darker border-b border-white/10 py-2xl">
+      <div class="wrap">
+        <nav aria-label="Breadcrumb" class="font-condensed text-sm tracking-widest uppercase text-white/50">
+          <a href="/" class="hover:text-yellow transition-colors" data-i18n="carta.crumb_home">Inicio</a> <span class="mx-2xs">·</span> <span class="text-white" data-i18n="carta.crumb">Carta</span>
+        </nav>
+        <h1 class="mt-md font-display uppercase leading-[0.95] text-[clamp(2.5rem,7vw,5.5rem)]">
+          <span data-i18n="carta.h1_a">Lo que</span> <span class="text-red" data-i18n="carta.h1_b">servimos</span>.
+        </h1>
+        <p class="mt-md text-white/75 max-w-2xl text-lg">
+          <span data-i18n="carta.lead">17 recetas firmadas en 5 familias: smash burgers, bocatas en chapata, hot dogs, desayuno y tapas.</span>
+          <strong class="text-yellow" data-i18n="carta.no_prices">Sin precios en la web</strong> <span data-i18n="carta.no_prices_cta">— pregúntanos por WhatsApp.</span>
+        </p>
+      </div>
+    </section>
+
+    <!-- Tabs + grid -->
+    <section class="py-2xl">
+      <div class="wrap">
+        <div class="flex flex-wrap gap-2xs mb-lg" role="tablist" aria-label="Filtrar por categoría" data-i18n-attr="aria-label:carta.tabs_aria">
+          {
+            subFamilias.map((s, i) => (
+              <button
+                type="button"
+                role="tab"
+                id={`mtab-${s.id}`}
+                aria-controls={`mpanel-${s.id}`}
+                aria-selected={i === 0 ? 'true' : 'false'}
+                tabindex={i === 0 ? 0 : -1}
+                data-mtab={s.id}
+                data-i18n={s.i18n}
+                class="menu-tab font-condensed text-base md:text-lg tracking-widest uppercase px-md py-xs border-2 border-white/15 text-white/75 hover:border-yellow hover:text-yellow transition-all"
+              >
+                {s.label}
+              </button>
+            ))
+          }
+        </div>
+
+        {
+          subFamilias.map((s, i) => (
+            <div
+              id={`mpanel-${s.id}`}
+              role="tabpanel"
+              aria-labelledby={`mtab-${s.id}`}
+              data-mpanel={s.id}
+              class={`menu-grid grid gap-sm md:gap-md grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 ${i === 0 ? '' : 'hidden'}`}
+            >
+              {all.filter(s.filter).map((it, idx) => (
+                <article class="dish-card group relative overflow-hidden border-2 border-white/10 bg-darker hover:border-yellow transition-colors" data-dish-slug={it.slug.replace(/^\d+-/, '')}>
+                  <div class="aspect-square overflow-hidden bg-dark relative">
+                    <span class="absolute top-xs left-xs z-10 font-condensed text-xs tracking-widest uppercase text-white/70 bg-black/60 backdrop-blur px-xs py-2xs border border-white/10">
+                      <span data-i18n="card.num_prefix">Nº</span> {String(idx + 1).padStart(2, '0')}
+                    </span>
+                    <img
+                      src={it.data.imagen}
+                      alt={it.data.nombre.es}
+                      width="600"
+                      height="600"
+                      loading="lazy"
+                      decoding="async"
+                      class="w-full h-full object-cover transition-transform duration-slow ease-out-expo group-hover:scale-105"
+                    />
+                    {it.data.tag && (
+                      <span
+                        data-i18n={`tag.${it.data.tag}`}
+                        class={`absolute top-xs right-xs z-10 px-xs py-[3px] text-[10px] font-condensed uppercase tracking-widest border ${
+                          it.data.tag === 'signature' ? 'bg-yellow text-black border-yellow' :
+                          it.data.tag === 'spicy' ? 'bg-red text-white border-red' :
+                          'bg-white text-black border-white'
+                        }`}
+                      >
+                        {it.data.tag === 'signature' ? 'Signature' : it.data.tag === 'spicy' ? 'Spicy' : 'Veggie'}
+                      </span>
+                    )}
+                  </div>
+                  <div class="p-md">
+                    <h3 class="font-display text-xl uppercase leading-tight group-hover:text-yellow transition-colors" data-i18n-nombre>{it.data.nombre.es}</h3>
+                    <p class="mt-2xs text-xs font-condensed tracking-widest uppercase text-white/40" data-i18n-base={it.data.base}>{baseLabel[it.data.base] ?? ''}</p>
+                    <ul class="mt-xs flex flex-wrap gap-x-xs gap-y-2xs text-xs text-white/70" data-i18n-ingredientes>
+                      {it.data.ingredientes.es.map((ing: string) => (<li>· {ing}</li>))}
+                    </ul>
+                  </div>
+                </article>
+              ))}
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- CTA strip -->
+    <section class="bg-red text-white py-2xl">
+      <div class="wrap text-center">
+        <h2 class="font-display uppercase text-[clamp(2rem,5vw,3.5rem)]">
+          <span data-i18n="cta.hungry_a">¿Hambre</span> <em data-i18n="cta.hungry_b">ya?</em>
+        </h2>
+        <p class="mt-md text-white/90 max-w-xl mx-auto" data-i18n="cta.hungry_lead">
+          Pídelo por WhatsApp y lo tenemos listo para cuando llegues.
+        </p>
+        <a
+          href="https://wa.me/34641293669"
+          target="_blank"
+          rel="noopener"
+          class="mt-lg inline-flex items-center gap-2xs bg-whatsapp text-white px-lg py-md font-condensed text-lg tracking-widest uppercase hover:bg-whatsapp-dark transition-colors"
+        >
+          <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20" aria-hidden="true"><path d="M20.5 3.5A11.5 11.5 0 0 0 3.6 19l-1.1 4 4.1-1.1A11.5 11.5 0 1 0 20.5 3.5Z"/></svg>
+          <span data-i18n="cta.order_wa">Pedir por WhatsApp</span>
+        </a>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<script>
+  const tabs = document.querySelectorAll<HTMLButtonElement>('.menu-tab');
+  const panels = document.querySelectorAll<HTMLElement>('[data-mpanel]');
+
+  const activate = (id: string, focus = false) => {
+    tabs.forEach((t) => {
+      const isActive = t.dataset.mtab === id;
+      t.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      t.tabIndex = isActive ? 0 : -1;
+      t.classList.toggle('is-active', isActive);
+      if (isActive && focus) t.focus();
+    });
+    panels.forEach((p) => p.classList.toggle('hidden', p.dataset.mpanel !== id));
+  };
+
+  tabs.forEach((t) => t.addEventListener('click', () => activate(t.dataset.mtab!)));
+  tabs.forEach((t, idx) =>
+    t.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        activate(tabs[(idx + 1) % tabs.length].dataset.mtab!, true);
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        activate(tabs[(idx - 1 + tabs.length) % tabs.length].dataset.mtab!, true);
+      }
+    }),
+  );
+
+  // Si la URL llega con hash (#desayunos, #tapas, #street-food), activamos esa tab.
+  const hashMap: Record<string, string> = {
+    '#desayunos': 'desayuno',
+    '#tapas': 'tapa',
+    '#street-food': 'smash',
+  };
+  const initial = hashMap[window.location.hash];
+  if (initial) activate(initial);
+</script>
+
+<style>
+  .menu-tab.is-active,
+  .menu-tab[aria-selected='true'] {
+    background: var(--red);
+    color: var(--white);
+    border-color: var(--red);
+  }
+</style>
