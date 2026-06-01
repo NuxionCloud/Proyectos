@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BOCATITOS · Desayuno · Street Food · Tapas · Sevilla</title>
+<meta name="description" content="BOCATITOS — el mejor sabor de Sevilla. Desayuno, Street Food y Tapas en el corazón de la Macarena.">
+<link rel="icon" type="image/png" href="assets/logo-bocatitos.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+
+<body>
+
+<!-- FONDO ANIMADO -->
+<div class="bg-anim" id="bgAnim">
+  <div class="bg-gradient"></div>
+  <div class="bg-grid"></div>
+</div>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="assets/logo-bocatitos.png" alt="Bocatitos">
+      <span>Bocatitos</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html" data-i18n="nav.inicio">Inicio</a></li>
+      <li><a href="carta.html" data-i18n="nav.carta">Carta</a></li>
+      <li><a href="pedidos.html" data-i18n="nav.pedidos">Pedidos</a></li>
+      <li><a href="reservar.html" data-i18n="nav.reservar">Reservar</a></li>
+      <li>
+        <div class="lang-switcher">
+          <button class="lang-btn active" data-lang="es">ES</button>
+          <button class="lang-btn" data-lang="en">EN</button>
+          <button class="lang-btn" data-lang="it">IT</button>
+          <button class="lang-btn" data-lang="fr">FR</button>
+          <button class="lang-btn" data-lang="de">DE</button>
+        </div>
+      </li>
+    </ul>
+    <button class="burger" aria-label="Menú"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero" id="inicio">
+    <div class="hero-content">
+      <div class="hero-badge reveal" data-i18n="hero.badge">El mejor sabor de Sevilla</div>
+      <img src="assets/logo-bocatitos.png" alt="Bocatitos" class="hero-logo reveal scale">
+      <h1 class="reveal">
+        <span data-i18n="hero.titleA">Sabor</span>
+        <span class="hl" data-i18n="hero.titleB">Callejero</span>
+      </h1>
+      <p class="hero-sub reveal" data-i18n="hero.sub">Desayunos auténticos, street food sin filtros y tapas para compartir. En el corazón de la Macarena.</p>
+      <div class="hero-cta reveal">
+        <a href="carta.html?all=1" class="btn btn-primary" data-i18n="hero.ctaMenu">Ver carta</a>
+        <a href="reservar.html" class="btn btn-outline" data-i18n="hero.ctaReserve">Reservar mesa</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICIOS - Orden: Desayuno | Tapas | Street Food -->
+  <section id="servicios">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="section-eyebrow" data-i18n="services.eyebrow">Nuestros servicios</div>
+        <h2 class="section-title">
+          <span data-i18n="services.titleA">Tres formas</span>
+          <span class="hl" data-i18n="services.titleB">de disfrutar</span>
+        </h2>
+        <p class="section-lead" data-i18n="services.lead">Cada momento del día tiene su propia manera de saber. Elige el tuyo.</p>
+      </div>
+
+      <div class="services-grid stagger reveal">
+
+        <a href="carta.html?cat=desayuno" class="service-card breakfast">
+          <div>
+            <div class="service-num">01</div>
+            <h3 data-i18n="service1.title">Desayuno</h3>
+            <p class="service-desc" data-i18n="service1.desc">Empezar el día como toca. Tostadas, montaditos y café recién hecho desde primera hora.</p>
+          </div>
+          <span class="service-link" data-i18n="service1.cta">Ver desayunos →</span>
+        </a>
+
+        <a href="carta.html?cat=tapas" class="service-card tapas">
+          <div>
+            <div class="service-num">02</div>
+            <h3 data-i18n="service3.title">Tapas</h3>
+            <p class="service-desc" data-i18n="service3.desc">Para compartir, picar y alargar la tarde. La tradición sevillana en cada bocado.</p>
+          </div>
+          <span class="service-link" data-i18n="service3.cta">Ver tapas →</span>
+        </a>
+
+        <a href="carta.html?cat=streetfood" class="service-card streetfood">
+          <div>
+            <div class="service-num">03</div>
+            <h3 data-i18n="service2.title">Street Food</h3>
+            <p class="service-desc" data-i18n="service2.desc">Sabores callejeros, generosos y sin complejos. El alma de Bocatitos.</p>
+          </div>
+          <span class="service-link" data-i18n="service2.cta">Ver street food →</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO (integrado en la home) -->
+  <section id="contacto">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="section-eyebrow" data-i18n="page.contact.title">Visítanos</div>
+        <h2 class="section-title">
+          <span data-i18n="contact.h2A">En el corazón</span>
+          <span class="hl" data-i18n="contact.h2B">de la Macarena</span>
+        </h2>
+        <p class="section-lead" data-i18n="page.contact.lead">En el corazón de la Macarena. Te esperamos.</p>
+      </div>
+
+      <div class="contact-grid">
+
+        <div class="contact-info reveal left">
+          <div class="contact-row">
+            <div class="ci-icon">📍</div>
+            <div>
+              <div class="ci-label" data-i18n="contact.addressLabel">Dirección</div>
+              <div class="ci-value">Av. de Sánchez Pizjuán, 6<br>41009 Sevilla</div>
+            </div>
+          </div>
+          <div class="contact-row">
+            <div class="ci-icon">📞</div>
+            <div>
+              <div class="ci-label" data-i18n="contact.phoneLabel">Teléfono</div>
+              <div class="ci-value"><a href="tel:+34641293669">+34 641 293 669</a></div>
+            </div>
+          </div>
+          <div class="contact-row">
+            <div class="ci-icon">🕐</div>
+            <div>
+              <div class="ci-label" data-i18n="contact.hoursLabel">Horario</div>
+              <div class="ci-value" data-i18n="contact.hoursValue">[Pendiente: añadir horario real]</div>
+            </div>
+          </div>
+          <div class="contact-row">
+            <div class="ci-icon">📱</div>
+            <div>
+              <div class="ci-label" data-i18n="contact.socialLabel">Redes sociales</div>
+              <div class="ci-value">@bocatitosf</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="map-box reveal right">
+          <iframe
+            src="https://www.google.com/maps?q=Av.+de+S%C3%A1nchez+Pizju%C3%A1n,+6,+41009+Sevilla&output=embed"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen></iframe>
+        </div>
+
+      </div>
+
+      <div class="reviews-box reveal">
+        <div class="reviews-header">
+          <div class="reviews-rating-badge">
+            <svg class="reviews-g-logo" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+            <span class="reviews-score">4,9</span>
+            <span class="reviews-stars-display">★★★★★</span>
+            <span class="reviews-count" data-i18n="reviews.count">+325 reseñas</span>
+          </div>
+          <div class="reviews-source" data-i18n="reviews.source">Reseñas en Google</div>
+        </div>
+
+        <div class="reviews-cards-grid" id="reviewsGrid">
+
+          <div class="review-card">
+            <div class="review-quote">"</div>
+            <p class="review-text" data-i18n="review1.text">Sitio genial, comida fresquísima a muy buen precio y personal muy amable. Definitivamente merece las 5 estrellas.</p>
+            <div class="review-footer"><span class="review-author-name">Sam S.</span><span class="review-stars">★★★★★</span></div>
+          </div>
+
+          <div class="review-card">
+            <div class="review-quote">"</div>
+            <p class="review-text" data-i18n="review2.text">Calidad y precio inmejorable. Personal muy atento y una hamburguesa gourmet excepcional.</p>
+            <div class="review-footer"><span class="review-author-name">Rosendo G.</span><span class="review-stars">★★★★★</span></div>
+          </div>
+
+          <div class="review-card">
+            <div class="review-quote">"</div>
+            <p class="review-text" data-i18n="review3.text">Servicio fantástico y un gran conocimiento de la comida. El equipo es excelente y los precios muy razonables.</p>
+            <div class="review-footer"><span class="review-author-name">Jose Luis G.</span><span class="review-stars">★★★★★</span></div>
+          </div>
+
+        </div>
+
+        <div class="reviews-nav">
+          <button class="reviews-prev" aria-label="Anterior">&#8249;</button>
+          <div class="reviews-dots" id="reviewsDots">
+            <button class="reviews-dot active" data-idx="0" aria-label="Reseña 1"></button>
+            <button class="reviews-dot" data-idx="1" aria-label="Reseña 2"></button>
+            <button class="reviews-dot" data-idx="2" aria-label="Reseña 3"></button>
+            <button class="reviews-dot" data-idx="3" aria-label="Reseña 4"></button>
+            <button class="reviews-dot" data-idx="4" aria-label="Reseña 5"></button>
+          </div>
+          <button class="reviews-next" aria-label="Siguiente">&#8250;</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <img src="assets/logo-bocatitos.png" alt="Bocatitos">
+    <span>BOCATITOS</span>
+  </div>
+  <div class="footer-tag" data-i18n="footer.tag">Desayuno · Street Food · Tapas</div>
+  <div class="footer-links">
+    <a href="carta.html" data-i18n="footer.linkMenu">Carta</a>
+    <a href="pedidos.html" data-i18n="footer.linkOrder">Pedidos</a>
+    <a href="reservar.html" data-i18n="footer.linkBook">Reservar</a>
+    <a href="index.html#contacto" data-i18n="footer.linkContact">Contacto</a>
+  </div>
+  <div class="socials">
+    <a href="https://www.instagram.com/bocatitosf/" target="_blank" rel="noopener" aria-label="Instagram">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+    </a>
+    <a href="https://www.tiktok.com/@bocatitosf" target="_blank" rel="noopener" aria-label="TikTok">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5.8 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.84-.1z"/></svg>
+    </a>
+    <a href="https://www.facebook.com/bocatitosf" target="_blank" rel="noopener" aria-label="Facebook">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+    </a>
+  </div>
+  <div class="footer-bottom">
+    © <span id="year"></span> Bocatitos · <span data-i18n="footer.rights">Todos los derechos reservados</span>
+  </div>
+</footer>
+
+<a href="https://wa.me/34641293669" target="_blank" rel="noopener" class="fab-wa" aria-label="WhatsApp">💬</a>
+
+<script src="assets/i18n.js"></script>
+<script src="assets/main.js"></script>
+</body>
+</html>

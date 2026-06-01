@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pedidos y Reservas WhatsApp · BOCATITOS</title>
+<meta name="description" content="Pide comida para llevar o reserva tu mesa directamente por WhatsApp.">
+<link rel="icon" type="image/png" href="assets/logo-bocatitos.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+
+<body>
+
+<div class="bg-anim" id="bgAnim">
+  <div class="bg-gradient"></div>
+  <div class="bg-grid"></div>
+</div>
+
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="assets/logo-bocatitos.png" alt="Bocatitos">
+      <span>Bocatitos</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html" data-i18n="nav.inicio">Inicio</a></li>
+      <li><a href="carta.html" data-i18n="nav.carta">Carta</a></li>
+      <li><a href="pedidos.html" data-i18n="nav.pedidos">Pedidos</a></li>
+      <li><a href="reservar.html" data-i18n="nav.reservar">Reservar</a></li>
+      <li>
+        <div class="lang-switcher">
+          <button class="lang-btn active" data-lang="es">ES</button>
+          <button class="lang-btn" data-lang="en">EN</button>
+          <button class="lang-btn" data-lang="it">IT</button>
+          <button class="lang-btn" data-lang="fr">FR</button>
+          <button class="lang-btn" data-lang="de">DE</button>
+        </div>
+      </li>
+    </ul>
+    <button class="burger" aria-label="Menú"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<main>
+
+  <header class="page-header">
+    <div class="breadcrumb reveal">
+      <a href="index.html" data-i18n="crumb.home">Inicio</a>
+      <span class="sep">/</span>
+      <span data-i18n="nav.pedidos">Pedidos</span>
+    </div>
+    <h1 class="reveal">
+      <span data-i18n="page.pedidos.title">Pedidos y reservas</span>
+      <br><span class="hl" data-i18n="page.pedidos.titleHl">por WhatsApp</span>
+    </h1>
+    <p class="reveal" data-i18n="page.pedidos.lead">Llámanos o escríbenos. Sin formularios, sin esperas.</p>
+  </header>
+
+  <section style="padding-top: 30px;">
+    <div class="container">
+
+      <div class="wa-hero reveal scale">
+
+        <div class="wa-big-icon" aria-hidden="true">💬</div>
+
+        <div class="section-eyebrow" data-i18n="wa.eyebrow" style="margin-bottom: 16px;">WhatsApp directo</div>
+        <h2>
+          <span data-i18n="wa.heading">Habla con</span>
+          <span class="hl" data-i18n="wa.headingHl">Bocatitos</span>
+        </h2>
+        <p data-i18n="wa.subtext">Tanto si quieres pedir comida para llevar como reservar una mesa, escríbenos por WhatsApp y respondemos al momento.</p>
+
+        <!-- Dos opciones: pedir o reservar, pero el mismo canal -->
+        <div class="wa-options">
+          <div class="wa-option">
+            <span class="wa-opt-icon">🛵</span>
+            <h3 data-i18n="wa.opt1Title">Pedir comida</h3>
+            <p data-i18n="wa.opt1Desc">Recogida en local o entrega a domicilio</p>
+          </div>
+          <div class="wa-option">
+            <span class="wa-opt-icon">📅</span>
+            <h3 data-i18n="wa.opt2Title">Reservar mesa</h3>
+            <p data-i18n="wa.opt2Desc">Indícanos día, hora y nº de personas</p>
+          </div>
+        </div>
+
+        <div class="wa-bullets">
+          <div class="wa-bullet"><span data-i18n="wa.bullet1">Respuesta rápida en horario de apertura</span></div>
+          <div class="wa-bullet"><span data-i18n="wa.bullet2">Sin descargar apps ni rellenar formularios</span></div>
+          <div class="wa-bullet"><span data-i18n="wa.bullet3">Confirmación directa por chat</span></div>
+        </div>
+
+        <div style="display:flex; gap: 14px; justify-content:center; flex-wrap:wrap; position:relative; z-index:1;">
+          <a href="https://wa.me/34641293669?text=Hola%20Bocatitos%2C%20quer%C3%ADa%20hacer%20un%20pedido"
+             target="_blank" rel="noopener" class="btn-wa">
+            <span>🛵</span>
+            <span data-i18n="wa.ctaOrder">Pedir por WhatsApp</span>
+          </a>
+          <a href="https://wa.me/34641293669?text=Hola%20Bocatitos%2C%20quer%C3%ADa%20reservar%20mesa"
+             target="_blank" rel="noopener" class="btn-wa">
+            <span>📅</span>
+            <span data-i18n="wa.ctaReserve">Reservar por WhatsApp</span>
+          </a>
+        </div>
+
+        <div style="margin-top: 36px; padding-top: 28px; border-top: 1px dashed rgba(255,229,0,0.2); font-size: 0.95rem; color: var(--text-dim); position:relative; z-index:1;">
+          <span data-i18n="wa.altWeb">¿Prefieres reservar por la web?</span>
+          <a href="reservar.html" style="color: var(--yellow); font-weight: 600; margin-left: 8px;" data-i18n="wa.altWebLink">Reserva online aquí →</a>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-logo">
+    <img src="assets/logo-bocatitos.png" alt="Bocatitos">
+    <span>BOCATITOS</span>
+  </div>
+  <div class="footer-tag" data-i18n="footer.tag">Desayuno · Street Food · Tapas</div>
+  <div class="footer-links">
+    <a href="carta.html" data-i18n="footer.linkMenu">Carta</a>
+    <a href="pedidos.html" data-i18n="footer.linkOrder">Pedidos</a>
+    <a href="reservar.html" data-i18n="footer.linkBook">Reservar</a>
+    <a href="index.html#contacto" data-i18n="footer.linkContact">Contacto</a>
+  </div>
+  <div class="socials">
+    <a href="https://www.instagram.com/bocatitosf/" target="_blank" rel="noopener" aria-label="Instagram">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+    </a>
+    <a href="https://www.tiktok.com/@bocatitosf" target="_blank" rel="noopener" aria-label="TikTok">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5.8 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.84-.1z"/></svg>
+    </a>
+    <a href="https://www.facebook.com/bocatitosf" target="_blank" rel="noopener" aria-label="Facebook">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+    </a>
+  </div>
+  <div class="footer-bottom">
+    © <span id="year"></span> Bocatitos · <span data-i18n="footer.rights">Todos los derechos reservados</span>
+  </div>
+</footer>
+
+<a href="https://wa.me/34641293669" target="_blank" rel="noopener" class="fab-wa" aria-label="WhatsApp">💬</a>
+
+<script src="assets/i18n.js"></script>
+<script src="assets/main.js"></script>
+</body>
+</html>
