@@ -1,0 +1,1015 @@
+{
+  "tito-gourmet": {
+    "nombre": {
+      "es": "TITO GOURMET",
+      "en": "TITO GOURMET",
+      "fr": "TITO GOURMET",
+      "it": "TITO GOURMET",
+      "de": "TITO GOURMET"
+    },
+    "ingredientes": {
+      "es": [
+        "Smash burger 100% vacuno",
+        "Doble bacon",
+        "Queso de cabra",
+        "Cebolla caramelizada",
+        "Rúcula",
+        "Salsa BBQ"
+      ],
+      "en": [
+        "100% beef smash patty",
+        "Double bacon",
+        "Goat's cheese",
+        "Caramelised onion",
+        "Rocket",
+        "BBQ sauce"
+      ],
+      "fr": [
+        "Smash burger 100 % bœuf",
+        "Double bacon",
+        "Chèvre",
+        "Oignons caramélisés",
+        "Roquette",
+        "Sauce BBQ"
+      ],
+      "it": [
+        "Smash burger 100% manzo",
+        "Doppio bacon",
+        "Caprino",
+        "Cipolla caramellata",
+        "Rucola",
+        "Salsa BBQ"
+      ],
+      "de": [
+        "100 % Rind Smash Patty",
+        "Doppelter Bacon",
+        "Ziegenkäse",
+        "Karamellisierte Zwiebeln",
+        "Rucola",
+        "BBQ-Sauce"
+      ]
+    }
+  },
+  "tito-bb": {
+    "nombre": {
+      "es": "TITO BB",
+      "en": "TITO BB",
+      "fr": "TITO BB",
+      "it": "TITO BB",
+      "de": "TITO BB"
+    },
+    "ingredientes": {
+      "es": [
+        "Smash burger 100% vacuno",
+        "Doble bacon",
+        "Cheddar",
+        "Edam",
+        "Lechuga",
+        "Tomate",
+        "Alioli verde"
+      ],
+      "en": [
+        "100% beef smash patty",
+        "Double bacon",
+        "Cheddar",
+        "Edam",
+        "Lettuce",
+        "Tomato",
+        "Green aioli"
+      ],
+      "fr": [
+        "Smash burger 100 % bœuf",
+        "Double bacon",
+        "Cheddar",
+        "Edam",
+        "Salade",
+        "Tomate",
+        "Aïoli vert"
+      ],
+      "it": [
+        "Smash burger 100% manzo",
+        "Doppio bacon",
+        "Cheddar",
+        "Edam",
+        "Lattuga",
+        "Pomodoro",
+        "Aïoli verde"
+      ],
+      "de": [
+        "100 % Rind Smash Patty",
+        "Doppelter Bacon",
+        "Cheddar",
+        "Edamer",
+        "Salat",
+        "Tomate",
+        "Grüner Aioli"
+      ]
+    }
+  },
+  "tito-hot": {
+    "nombre": {
+      "es": "TITO HOT",
+      "en": "TITO HOT",
+      "fr": "TITO HOT",
+      "it": "TITO HOT",
+      "de": "TITO HOT"
+    },
+    "ingredientes": {
+      "es": [
+        "Smash burger 100% vacuno",
+        "Doble bacon",
+        "Cheddar",
+        "Jalapeños",
+        "Salsa chipotle"
+      ],
+      "en": [
+        "100% beef smash patty",
+        "Double bacon",
+        "Cheddar",
+        "Jalapeños",
+        "Chipotle sauce"
+      ],
+      "fr": [
+        "Smash burger 100 % bœuf",
+        "Double bacon",
+        "Cheddar",
+        "Jalapeños",
+        "Sauce chipotle"
+      ],
+      "it": [
+        "Smash burger 100% manzo",
+        "Doppio bacon",
+        "Cheddar",
+        "Jalapeños",
+        "Salsa chipotle"
+      ],
+      "de": [
+        "100 % Rind Smash Patty",
+        "Doppelter Bacon",
+        "Cheddar",
+        "Jalapeños",
+        "Chipotle-Sauce"
+      ]
+    }
+  },
+  "tito-trufa": {
+    "nombre": {
+      "es": "TITO TRUFA",
+      "en": "TITO TRUFA",
+      "fr": "TITO TRUFA",
+      "it": "TITO TRUFA",
+      "de": "TITO TRUFA"
+    },
+    "ingredientes": {
+      "es": [
+        "Smash burger 100% vacuno",
+        "Doble bacon",
+        "Cheddar",
+        "Mozzarella",
+        "Cebolla caramelizada",
+        "Salsa tartufata"
+      ],
+      "en": [
+        "100% beef smash patty",
+        "Double bacon",
+        "Cheddar",
+        "Mozzarella",
+        "Caramelised onion",
+        "Truffle (tartufata) sauce"
+      ],
+      "fr": [
+        "Smash burger 100 % bœuf",
+        "Double bacon",
+        "Cheddar",
+        "Mozzarella",
+        "Oignons caramélisés",
+        "Sauce à la truffe (tartufata)"
+      ],
+      "it": [
+        "Smash burger 100% manzo",
+        "Doppio bacon",
+        "Cheddar",
+        "Mozzarella",
+        "Cipolla caramellata",
+        "Salsa tartufata"
+      ],
+      "de": [
+        "100 % Rind Smash Patty",
+        "Doppelter Bacon",
+        "Cheddar",
+        "Mozzarella",
+        "Karamellisierte Zwiebeln",
+        "Trüffelsauce (Tartufata)"
+      ]
+    }
+  },
+  "tito-porky": {
+    "nombre": {
+      "es": "TITO PORKY",
+      "en": "TITO PORKY",
+      "fr": "TITO PORKY",
+      "it": "TITO PORKY",
+      "de": "TITO PORKY"
+    },
+    "ingredientes": {
+      "es": [
+        "Smash burger 100% vacuno",
+        "Edam",
+        "Pulled pork",
+        "Cebolla crujiente",
+        "Salsa bacon"
+      ],
+      "en": [
+        "100% beef smash patty",
+        "Edam",
+        "Pulled pork",
+        "Crispy onions",
+        "Bacon sauce"
+      ],
+      "fr": [
+        "Smash burger 100 % bœuf",
+        "Edam",
+        "Effiloché de porc",
+        "Oignons croustillants",
+        "Sauce bacon"
+      ],
+      "it": [
+        "Smash burger 100% manzo",
+        "Edam",
+        "Pulled pork",
+        "Cipolla croccante",
+        "Salsa al bacon"
+      ],
+      "de": [
+        "100 % Rind Smash Patty",
+        "Edamer",
+        "Pulled Pork",
+        "Röstzwiebeln",
+        "Speck-Sauce"
+      ]
+    }
+  },
+  "tito-sanji": {
+    "nombre": {
+      "es": "TITO SANJI",
+      "en": "TITO SANJI",
+      "fr": "TITO SANJI",
+      "it": "TITO SANJI",
+      "de": "TITO SANJI"
+    },
+    "ingredientes": {
+      "es": [
+        "Smash burger 100% vacuno",
+        "Doble bacon",
+        "Cheddar",
+        "Cebolla",
+        "Salsa Sanji (la especial)"
+      ],
+      "en": [
+        "100% beef smash patty",
+        "Double bacon",
+        "Cheddar",
+        "Onion",
+        "Sanji sauce (the special)"
+      ],
+      "fr": [
+        "Smash burger 100 % bœuf",
+        "Double bacon",
+        "Cheddar",
+        "Oignon",
+        "Sauce Sanji (la spéciale)"
+      ],
+      "it": [
+        "Smash burger 100% manzo",
+        "Doppio bacon",
+        "Cheddar",
+        "Cipolla",
+        "Salsa Sanji (la speciale)"
+      ],
+      "de": [
+        "100 % Rind Smash Patty",
+        "Doppelter Bacon",
+        "Cheddar",
+        "Zwiebel",
+        "Sanji-Sauce (die spezielle)"
+      ]
+    }
+  },
+  "pobacemi": {
+    "nombre": {
+      "es": "POBACEMI",
+      "en": "POBACEMI",
+      "fr": "POBACEMI",
+      "it": "POBACEMI",
+      "de": "POBACEMI"
+    },
+    "ingredientes": {
+      "es": [
+        "Pollo o cerdo",
+        "Doble bacon",
+        "Cebolla caramelizada",
+        "Salsa miel-mostaza"
+      ],
+      "en": [
+        "Chicken or pork",
+        "Double bacon",
+        "Caramelised onion",
+        "Honey-mustard sauce"
+      ],
+      "fr": [
+        "Poulet ou porc",
+        "Double bacon",
+        "Oignons caramélisés",
+        "Sauce miel-moutarde"
+      ],
+      "it": [
+        "Pollo o maiale",
+        "Doppio bacon",
+        "Cipolla caramellata",
+        "Salsa miele e senape"
+      ],
+      "de": [
+        "Hähnchen oder Schwein",
+        "Doppelter Bacon",
+        "Karamellisierte Zwiebeln",
+        "Honig-Senf-Sauce"
+      ]
+    }
+  },
+  "pocebra": {
+    "nombre": {
+      "es": "POCEBRA",
+      "en": "POCEBRA",
+      "fr": "POCEBRA",
+      "it": "POCEBRA",
+      "de": "POCEBRA"
+    },
+    "ingredientes": {
+      "es": [
+        "Pollo o cerdo",
+        "Bacon",
+        "Queso de cabra",
+        "Cebolla caramelizada",
+        "Salsa miel-mostaza"
+      ],
+      "en": [
+        "Chicken or pork",
+        "Bacon",
+        "Goat's cheese",
+        "Caramelised onion",
+        "Honey-mustard sauce"
+      ],
+      "fr": [
+        "Poulet ou porc",
+        "Bacon",
+        "Chèvre",
+        "Oignons caramélisés",
+        "Sauce miel-moutarde"
+      ],
+      "it": [
+        "Pollo o maiale",
+        "Bacon",
+        "Caprino",
+        "Cipolla caramellata",
+        "Salsa miele e senape"
+      ],
+      "de": [
+        "Hähnchen oder Schwein",
+        "Speck",
+        "Ziegenkäse",
+        "Karamellisierte Zwiebeln",
+        "Honig-Senf-Sauce"
+      ]
+    }
+  },
+  "rocotito": {
+    "nombre": {
+      "es": "ROCOTITO",
+      "en": "ROCOTITO",
+      "fr": "ROCOTITO",
+      "it": "ROCOTITO",
+      "de": "ROCOTITO"
+    },
+    "ingredientes": {
+      "es": [
+        "Pollo o lomo de cerdo",
+        "Cheddar",
+        "Mozzarella",
+        "Jalapeños",
+        "Salsa chipotle"
+      ],
+      "en": [
+        "Chicken or pork loin",
+        "Cheddar",
+        "Mozzarella",
+        "Jalapeños",
+        "Chipotle sauce"
+      ],
+      "fr": [
+        "Poulet ou échine de porc",
+        "Cheddar",
+        "Mozzarella",
+        "Jalapeños",
+        "Sauce chipotle"
+      ],
+      "it": [
+        "Pollo o lonza di maiale",
+        "Cheddar",
+        "Mozzarella",
+        "Jalapeños",
+        "Salsa chipotle"
+      ],
+      "de": [
+        "Hähnchen oder Schweinefilet",
+        "Cheddar",
+        "Mozzarella",
+        "Jalapeños",
+        "Chipotle-Sauce"
+      ]
+    }
+  },
+  "baqueto": {
+    "nombre": {
+      "es": "BAQUETO",
+      "en": "BAQUETO",
+      "fr": "BAQUETO",
+      "it": "BAQUETO",
+      "de": "BAQUETO"
+    },
+    "ingredientes": {
+      "es": [
+        "Lomo adobado",
+        "Bacon",
+        "Cheddar",
+        "Tortilla española",
+        "Alioli verde"
+      ],
+      "en": [
+        "Marinated pork loin",
+        "Bacon",
+        "Cheddar",
+        "Spanish omelette",
+        "Green aioli"
+      ],
+      "fr": [
+        "Échine de porc marinée",
+        "Bacon",
+        "Cheddar",
+        "Tortilla espagnole",
+        "Aïoli vert"
+      ],
+      "it": [
+        "Lonza di maiale marinata",
+        "Bacon",
+        "Cheddar",
+        "Tortilla spagnola",
+        "Aïoli verde"
+      ],
+      "de": [
+        "Mariniertes Schweinefilet",
+        "Speck",
+        "Cheddar",
+        "Spanisches Omelett",
+        "Grüner Aioli"
+      ]
+    }
+  },
+  "onito": {
+    "nombre": {
+      "es": "ONITO",
+      "en": "ONITO",
+      "fr": "ONITO",
+      "it": "ONITO",
+      "de": "ONITO"
+    },
+    "ingredientes": {
+      "es": [
+        "Pollo o lomo de cerdo",
+        "Jamón",
+        "Pimiento verde",
+        "Tortilla española",
+        "Alioli"
+      ],
+      "en": [
+        "Chicken or pork loin",
+        "Ham",
+        "Green pepper",
+        "Spanish omelette",
+        "Aioli"
+      ],
+      "fr": [
+        "Poulet ou échine de porc",
+        "Jambon",
+        "Poivron vert",
+        "Tortilla espagnole",
+        "Aïoli"
+      ],
+      "it": [
+        "Pollo o lonza di maiale",
+        "Prosciutto",
+        "Peperone verde",
+        "Tortilla spagnola",
+        "Aïoli"
+      ],
+      "de": [
+        "Hähnchen oder Schweinefilet",
+        "Schinken",
+        "Grüne Paprika",
+        "Spanisches Omelett",
+        "Aioli"
+      ]
+    }
+  },
+  "tartufito": {
+    "nombre": {
+      "es": "TARTUFITO",
+      "en": "TARTUFITO",
+      "fr": "TARTUFITO",
+      "it": "TARTUFITO",
+      "de": "TARTUFITO"
+    },
+    "ingredientes": {
+      "es": [
+        "Pollo o lomo de cerdo",
+        "Cheddar",
+        "Mozzarella",
+        "Salsa tartufata"
+      ],
+      "en": [
+        "Chicken or pork loin",
+        "Cheddar",
+        "Mozzarella",
+        "Truffle (tartufata) sauce"
+      ],
+      "fr": [
+        "Poulet ou échine de porc",
+        "Cheddar",
+        "Mozzarella",
+        "Sauce à la truffe (tartufata)"
+      ],
+      "it": [
+        "Pollo o lonza di maiale",
+        "Cheddar",
+        "Mozzarella",
+        "Salsa tartufata"
+      ],
+      "de": [
+        "Hähnchen oder Schweinefilet",
+        "Cheddar",
+        "Mozzarella",
+        "Trüffelsauce (Tartufata)"
+      ]
+    }
+  },
+  "bocaveggie": {
+    "nombre": {
+      "es": "BOCAVEGGIE",
+      "en": "BOCAVEGGIE",
+      "fr": "BOCAVEGGIE",
+      "it": "BOCAVEGGIE",
+      "de": "BOCAVEGGIE"
+    },
+    "ingredientes": {
+      "es": [
+        "Tortilla española",
+        "Mozzarella",
+        "Lechuga",
+        "Tomate",
+        "Alioli verde"
+      ],
+      "en": [
+        "Spanish omelette",
+        "Mozzarella",
+        "Lettuce",
+        "Tomato",
+        "Green aioli"
+      ],
+      "fr": [
+        "Tortilla espagnole",
+        "Mozzarella",
+        "Salade",
+        "Tomate",
+        "Aïoli vert"
+      ],
+      "it": [
+        "Tortilla spagnola",
+        "Mozzarella",
+        "Lattuga",
+        "Pomodoro",
+        "Aïoli verde"
+      ],
+      "de": [
+        "Spanisches Omelett",
+        "Mozzarella",
+        "Salat",
+        "Tomate",
+        "Grüner Aioli"
+      ]
+    }
+  },
+  "porkillo": {
+    "nombre": {
+      "es": "PORKILLO",
+      "en": "PORKILLO",
+      "fr": "PORKILLO",
+      "it": "PORKILLO",
+      "de": "PORKILLO"
+    },
+    "ingredientes": {
+      "es": [
+        "Salchicha",
+        "Pulled pork",
+        "Cebolla crujiente",
+        "Salsa chipotle"
+      ],
+      "en": [
+        "Sausage",
+        "Pulled pork",
+        "Crispy onions",
+        "Chipotle sauce"
+      ],
+      "fr": [
+        "Saucisse",
+        "Effiloché de porc",
+        "Oignons croustillants",
+        "Sauce chipotle"
+      ],
+      "it": [
+        "Würstel",
+        "Pulled pork",
+        "Cipolla croccante",
+        "Salsa chipotle"
+      ],
+      "de": [
+        "Würstchen",
+        "Pulled Pork",
+        "Röstzwiebeln",
+        "Chipotle-Sauce"
+      ]
+    }
+  },
+  "uno-que-empache": {
+    "nombre": {
+      "es": "UNO QUE EMPACHE",
+      "en": "UNO QUE EMPACHE",
+      "fr": "UNO QUE EMPACHE",
+      "it": "UNO QUE EMPACHE",
+      "de": "UNO QUE EMPACHE"
+    },
+    "ingredientes": {
+      "es": [
+        "Salchicha",
+        "Queso crema",
+        "Mozzarella",
+        "Pico de gallo (opcional)",
+        "Alioli verde"
+      ],
+      "en": [
+        "Sausage",
+        "Cream cheese",
+        "Mozzarella",
+        "Pico de gallo (optional)",
+        "Green aioli"
+      ],
+      "fr": [
+        "Saucisse",
+        "Fromage frais",
+        "Mozzarella",
+        "Pico de gallo (en option)",
+        "Aïoli vert"
+      ],
+      "it": [
+        "Würstel",
+        "Formaggio cremoso",
+        "Mozzarella",
+        "Pico de gallo (facoltativo)",
+        "Aïoli verde"
+      ],
+      "de": [
+        "Würstchen",
+        "Frischkäse",
+        "Mozzarella",
+        "Pico de Gallo (optional)",
+        "Grüner Aioli"
+      ]
+    }
+  },
+  "que-pesha": {
+    "nombre": {
+      "es": "QUÉ PESHÁ",
+      "en": "QUÉ PESHÁ",
+      "fr": "QUÉ PESHÁ",
+      "it": "QUÉ PESHÁ",
+      "de": "QUÉ PESHÁ"
+    },
+    "ingredientes": {
+      "es": [
+        "Salchicha",
+        "Edam",
+        "Cebolla caramelizada",
+        "Cebolla crujiente",
+        "Salsa bacon"
+      ],
+      "en": [
+        "Sausage",
+        "Edam",
+        "Caramelised onion",
+        "Crispy onions",
+        "Bacon sauce"
+      ],
+      "fr": [
+        "Saucisse",
+        "Edam",
+        "Oignons caramélisés",
+        "Oignons croustillants",
+        "Sauce bacon"
+      ],
+      "it": [
+        "Würstel",
+        "Edam",
+        "Cipolla caramellata",
+        "Cipolla croccante",
+        "Salsa al bacon"
+      ],
+      "de": [
+        "Würstchen",
+        "Edamer",
+        "Karamellisierte Zwiebeln",
+        "Röstzwiebeln",
+        "Speck-Sauce"
+      ]
+    }
+  },
+  "ole-sanji": {
+    "nombre": {
+      "es": "OLE SANJI",
+      "en": "OLE SANJI",
+      "fr": "OLE SANJI",
+      "it": "OLE SANJI",
+      "de": "OLE SANJI"
+    },
+    "ingredientes": {
+      "es": [
+        "Salchicha",
+        "Cheddar",
+        "Cebolla caramelizada",
+        "Bacon",
+        "Salsa Sanji (la especial)"
+      ],
+      "en": [
+        "Sausage",
+        "Cheddar",
+        "Caramelised onion",
+        "Bacon",
+        "Sanji sauce (the special)"
+      ],
+      "fr": [
+        "Saucisse",
+        "Cheddar",
+        "Oignons caramélisés",
+        "Bacon",
+        "Sauce Sanji (la spéciale)"
+      ],
+      "it": [
+        "Würstel",
+        "Cheddar",
+        "Cipolla caramellata",
+        "Bacon",
+        "Salsa Sanji (la speciale)"
+      ],
+      "de": [
+        "Würstchen",
+        "Cheddar",
+        "Karamellisierte Zwiebeln",
+        "Speck",
+        "Sanji-Sauce (die spezielle)"
+      ]
+    }
+  },
+  "tostada-aove-tomate": {
+    "nombre": {
+      "es": "TOSTADA AOVE Y TOMATE",
+      "en": "EVOO & TOMATO TOAST",
+      "fr": "TARTINE HUILE D'OLIVE & TOMATE",
+      "it": "PANE, OLIO E POMODORO",
+      "de": "BROT MIT OLIVENÖL & TOMATE"
+    },
+    "ingredientes": {
+      "es": [
+        "Chapata tostada",
+        "Aceite de oliva virgen extra",
+        "Tomate rallado",
+        "Sal en escamas"
+      ],
+      "en": [
+        "Toasted ciabatta",
+        "Extra-virgin olive oil",
+        "Grated tomato",
+        "Sea salt flakes"
+      ],
+      "fr": [
+        "Ciabatta grillée",
+        "Huile d'olive vierge extra",
+        "Tomate râpée",
+        "Fleur de sel"
+      ],
+      "it": [
+        "Ciabatta tostata",
+        "Olio extravergine d'oliva",
+        "Pomodoro grattugiato",
+        "Sale in fiocchi"
+      ],
+      "de": [
+        "Geröstete Ciabatta",
+        "Natives Olivenöl extra",
+        "Geriebene Tomate",
+        "Meersalzflocken"
+      ]
+    }
+  },
+  "tostada-serrana": {
+    "nombre": {
+      "es": "TOSTADA SERRANA",
+      "en": "SERRANO TOAST",
+      "fr": "TARTINE SERRANO",
+      "it": "TOSTADA SERRANO",
+      "de": "SERRANO-TOAST"
+    },
+    "ingredientes": {
+      "es": [
+        "Chapata tostada",
+        "Tomate",
+        "Jamón serrano",
+        "AOVE"
+      ],
+      "en": [
+        "Toasted ciabatta",
+        "Tomato",
+        "Serrano ham",
+        "EVOO"
+      ],
+      "fr": [
+        "Ciabatta grillée",
+        "Tomate",
+        "Jambon serrano",
+        "Huile d'olive vierge extra"
+      ],
+      "it": [
+        "Ciabatta tostata",
+        "Pomodoro",
+        "Prosciutto serrano",
+        "Olio extravergine d'oliva"
+      ],
+      "de": [
+        "Geröstete Ciabatta",
+        "Tomate",
+        "Serrano-Schinken",
+        "Natives Olivenöl extra"
+      ]
+    }
+  },
+  "montadito-bacon-queso": {
+    "nombre": {
+      "es": "MONTADITO DE BACON Y QUESO",
+      "en": "BACON & CHEESE MONTADITO",
+      "fr": "MONTADITO BACON & FROMAGE",
+      "it": "MONTADITO BACON E FORMAGGIO",
+      "de": "MONTADITO MIT SPECK & KÄSE"
+    },
+    "ingredientes": {
+      "es": [
+        "Chapata caliente",
+        "Bacon crujiente",
+        "Queso fundido"
+      ],
+      "en": [
+        "Warm ciabatta",
+        "Crispy bacon",
+        "Melted cheese"
+      ],
+      "fr": [
+        "Ciabatta chaude",
+        "Bacon croustillant",
+        "Fromage fondu"
+      ],
+      "it": [
+        "Ciabatta calda",
+        "Bacon croccante",
+        "Formaggio fuso"
+      ],
+      "de": [
+        "Warme Ciabatta",
+        "Knuspriger Speck",
+        "Geschmolzener Käse"
+      ]
+    }
+  },
+  "croquetas-de-la-casa": {
+    "nombre": {
+      "es": "CROQUETAS DE LA CASA",
+      "en": "HOUSE CROQUETTES",
+      "fr": "CROQUETTES MAISON",
+      "it": "CROCCHETTE DELLA CASA",
+      "de": "HAUSGEMACHTE KROKETTEN"
+    },
+    "ingredientes": {
+      "es": [
+        "Bechamel cremosa",
+        "Jamón / pollo / setas",
+        "Empanado crujiente"
+      ],
+      "en": [
+        "Creamy béchamel",
+        "Ham / chicken / mushroom",
+        "Crispy coating"
+      ],
+      "fr": [
+        "Béchamel crémeuse",
+        "Jambon / poulet / champignons",
+        "Panure croustillante"
+      ],
+      "it": [
+        "Besciamella cremosa",
+        "Prosciutto / pollo / funghi",
+        "Panatura croccante"
+      ],
+      "de": [
+        "Cremige Béchamel",
+        "Schinken / Hähnchen / Pilze",
+        "Knusprige Panade"
+      ]
+    }
+  },
+  "patatas-bravas": {
+    "nombre": {
+      "es": "PATATAS BRAVAS",
+      "en": "PATATAS BRAVAS",
+      "fr": "PATATAS BRAVAS",
+      "it": "PATATAS BRAVAS",
+      "de": "PATATAS BRAVAS"
+    },
+    "ingredientes": {
+      "es": [
+        "Patata gruesa frita",
+        "Salsa brava de la casa",
+        "Alioli"
+      ],
+      "en": [
+        "Thick-cut fried potato",
+        "House brava sauce",
+        "Aioli"
+      ],
+      "fr": [
+        "Pommes de terre épaisses",
+        "Sauce brava maison",
+        "Aïoli"
+      ],
+      "it": [
+        "Patate fritte spesse",
+        "Salsa brava della casa",
+        "Aïoli"
+      ],
+      "de": [
+        "Dick geschnittene Bratkartoffeln",
+        "Hauseigene Brava-Sauce",
+        "Aioli"
+      ]
+    }
+  },
+  "pinchos-de-la-semana": {
+    "nombre": {
+      "es": "PINCHOS DE LA SEMANA",
+      "en": "WEEKLY PINCHOS",
+      "fr": "PINCHOS DE LA SEMAINE",
+      "it": "PINCHOS DELLA SETTIMANA",
+      "de": "PINCHOS DER WOCHE"
+    },
+    "ingredientes": {
+      "es": [
+        "Rotamos cada semana",
+        "Síguenos en Instagram",
+        "@bocatitosf"
+      ],
+      "en": [
+        "We rotate weekly",
+        "Follow us on Instagram",
+        "@bocatitosf"
+      ],
+      "fr": [
+        "On change chaque semaine",
+        "Suis-nous sur Instagram",
+        "@bocatitosf"
+      ],
+      "it": [
+        "Cambiamo ogni settimana",
+        "Seguici su Instagram",
+        "@bocatitosf"
+      ],
+      "de": [
+        "Wir wechseln wöchentlich",
+        "Folg uns auf Instagram",
+        "@bocatitosf"
+      ]
+    }
+  }
+}
