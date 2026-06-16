@@ -6,7 +6,7 @@ Monorepo donde viven todos los proyectos web entregados por NuxionCloud.
 
 | Carpeta | Cliente | Stack | Estado |
 |---|---|---|---|
-| [`bocatitos/`](./bocatitos/) | Bocatitos Street Food (Sevilla) | Astro 4 + Tailwind 3 + i18n cliente | v1.3 · listo para deploy |
+| `bocatitos/` | Bocatitos Street Food (Sevilla) | Astro 4 + Tailwind 3 + i18n cliente | v1.3 · listo para deploy |
 
 ## Cómo retomar un proyecto en otro PC
 
