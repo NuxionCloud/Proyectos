@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Playbook · Bot WhatsApp Bocatitos · Nuxion</title>
+<style>
+  :root{
+    --bg:#0b0d10;
+    --panel:#13171c;
+    --panel-2:#1a1f26;
+    --line:#222831;
+    --text:#e7eaee;
+    --muted:#9aa3b2;
+    --brand:#b8252b;
+    --brand-2:#e63946;
+    --ok:#2ecc71;
+    --warn:#f1c40f;
+    --err:#e74c3c;
+    --info:#3498db;
+    --code-bg:#0a0c10;
+    --code-text:#cdd6df;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family: ui-sans-serif, system-ui, -apple-system, "Inter", "Segoe UI", Roboto, sans-serif;
+    line-height:1.6;
+  }
+  .wrap{max-width:980px;margin:0 auto;padding:48px 24px 96px}
+  header{
+    background:linear-gradient(135deg, #1a1f26 0%, #0f1216 100%);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:36px 32px;
+    margin-bottom:32px;
+    position:relative;
+    overflow:hidden;
+  }
+  header::before{
+    content:'';position:absolute;top:0;right:0;width:300px;height:300px;
+    background:radial-gradient(circle, rgba(184,37,43,0.18) 0%, transparent 70%);
+  }
+  .brand-tag{
+    display:inline-block;padding:4px 12px;border-radius:999px;
+    background:rgba(184,37,43,0.15);color:var(--brand-2);
+    font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
+    margin-bottom:14px;
+  }
+  h1{margin:0 0 8px;font-size:36px;font-weight:800;letter-spacing:-0.01em}
+  .subtitle{color:var(--muted);font-size:17px;margin:0 0 18px}
+  .meta-strip{
+    display:flex;gap:24px;flex-wrap:wrap;font-size:13px;color:var(--muted);
+    border-top:1px solid var(--line);padding-top:14px;margin-top:18px;
+  }
+  .meta-strip span strong{color:var(--text)}
+  h2{
+    font-size:24px;font-weight:700;letter-spacing:-0.01em;
+    margin:48px 0 16px;padding-bottom:8px;border-bottom:1px solid var(--line);
+  }
+  h2 .num{
+    display:inline-block;width:34px;height:34px;line-height:34px;text-align:center;
+    background:var(--brand);color:#fff;border-radius:8px;margin-right:12px;
+    font-size:15px;font-weight:800;vertical-align:middle;
+  }
+  h3{font-size:18px;margin:24px 0 10px;color:#fff}
+  p{margin:0 0 12px}
+  a{color:var(--brand-2);text-decoration:none;border-bottom:1px dotted var(--brand-2)}
+  a:hover{color:#fff;border-bottom-color:#fff}
+  ul,ol{margin:0 0 16px 20px;padding:0}
+  li{margin-bottom:6px}
+  .panel{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:20px 24px;
+    margin:16px 0;
+  }
+  .panel-warn{border-left:4px solid var(--warn)}
+  .panel-err{border-left:4px solid var(--err)}
+  .panel-ok{border-left:4px solid var(--ok)}
+  .panel-info{border-left:4px solid var(--info)}
+  code{
+    background:var(--code-bg);color:var(--code-text);
+    padding:2px 6px;border-radius:4px;font-size:13px;
+    font-family: "JetBrains Mono", ui-monospace, "Consolas", monospace;
+  }
+  pre{
+    background:var(--code-bg);color:var(--code-text);
+    padding:16px 20px;border-radius:10px;overflow-x:auto;
+    border:1px solid var(--line);font-size:13px;line-height:1.55;
+    font-family: "JetBrains Mono", ui-monospace, "Consolas", monospace;
+    margin:12px 0;
+  }
+  pre code{background:transparent;padding:0;border-radius:0}
+  table{
+    width:100%;border-collapse:collapse;margin:12px 0;
+    background:var(--panel);border-radius:10px;overflow:hidden;
+    border:1px solid var(--line);
+  }
+  th{
+    text-align:left;padding:12px 16px;background:var(--panel-2);
+    font-size:13px;font-weight:700;color:#fff;
+    border-bottom:1px solid var(--line);
+  }
+  td{padding:11px 16px;border-bottom:1px solid var(--line);font-size:14px;vertical-align:top}
+  tr:last-child td{border-bottom:0}
+  td code{font-size:12px}
+  .badge{
+    display:inline-block;padding:2px 8px;border-radius:6px;font-size:11px;
+    font-weight:700;letter-spacing:0.04em;text-transform:uppercase;
+  }
+  .b-ok{background:rgba(46,204,113,0.15);color:var(--ok)}
+  .b-warn{background:rgba(241,196,15,0.15);color:var(--warn)}
+  .b-info{background:rgba(52,152,219,0.15);color:var(--info)}
+  .b-err{background:rgba(231,76,60,0.15);color:var(--err)}
+  .step{
+    background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    padding:18px 22px;margin:10px 0;border-left:4px solid var(--brand);
+  }
+  .step h4{margin:0 0 8px;font-size:15px;color:#fff}
+  .step h4 .step-num{color:var(--brand-2);margin-right:8px}
+  hr{border:0;border-top:1px solid var(--line);margin:32px 0}
+  footer{
+    margin-top:64px;padding-top:24px;border-top:1px solid var(--line);
+    color:var(--muted);font-size:13px;text-align:center;
+  }
+  .toc{
+    background:var(--panel-2);border:1px solid var(--line);
+    border-radius:12px;padding:18px 24px;margin:0 0 32px;
+  }
+  .toc h3{margin:0 0 10px;font-size:14px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em}
+  .toc ol{margin:0 0 0 18px;padding:0}
+  .toc li{margin-bottom:4px;font-size:14px}
+  .toc a{color:var(--text);border:0}
+  .toc a:hover{color:var(--brand-2)}
+  .kbd{
+    display:inline-block;padding:2px 7px;border-radius:5px;
+    background:#2a2f38;border:1px solid #3a414d;border-bottom-width:2px;
+    color:#fff;font-size:12px;font-family:ui-monospace,monospace;
+  }
+  @media print {
+    body{background:#fff;color:#000}
+    .wrap{padding:0}
+    header,.panel,.step{background:#f5f5f5;border-color:#ccc}
+    pre,code{background:#f0f0f0;color:#000}
+    a{color:#000}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <span class="brand-tag">Nuxion · Playbook</span>
+  <h1>Bot WhatsApp · Bocatitos</h1>
+  <p class="subtitle">Asistente conversacional para pedidos · Twilio Sandbox + n8n · v2 con carrito persistente</p>
+  <div class="meta-strip">
+    <span><strong>Cliente</strong> Bocatitos Street Food (Sevilla)</span>
+    <span><strong>Stack</strong> n8n + Twilio WhatsApp Sandbox</span>
+    <span><strong>Fecha</strong> 2026-06-03</span>
+    <span><strong>Autor</strong> Rafa · NuxionCloud</span>
+    <span><strong>Versión</strong> 2.0</span>
+  </div>
+</header>
+
+<div class="toc">
+  <h3>Índice</h3>
+  <ol>
+    <li><a href="#overview">Overview — qué es y dónde vive</a></li>
+    <li><a href="#stack">Stack &amp; arquitectura</a></li>
+    <li><a href="#prereqs">Pre-requisitos</a></li>
+    <li><a href="#golden">Reglas de oro</a></li>
+    <li><a href="#setup">Procedimiento paso a paso</a></li>
+    <li><a href="#workflow">Workflow diario</a></li>
+    <li><a href="#troubleshooting">Troubleshooting</a></li>
+    <li><a href="#lessons">Lessons learned</a></li>
+    <li><a href="#migration">Migración a Meta Cloud API en producción</a></li>
+  </ol>
+</div>
+
+<h2 id="overview"><span class="num">1</span>Overview</h2>
+
+<p>
+Bot conversacional de WhatsApp para Bocatitos Street Food, un local de Av. Sánchez Pizjuán 6 (Distrito Macarena, Sevilla). El cliente final escribe al bot por WhatsApp y este le guía con un menú interactivo para consultar la carta, ver horarios, ver cómo llegar y hacer un pedido. El pedido finalizado se reenvía al móvil del restaurante para que se procese manualmente y pase a cocina.
+</p>
+
+<p>
+El bot vive en el servidor n8n de Manu (productivo Nuxion) y usa Twilio WhatsApp Sandbox como pasarela. Para producción real con el cliente se migra a Meta Cloud API directo con el número del cliente — el código del workflow es ~90% reutilizable.
+</p>
+
+<div class="panel panel-info">
+  <strong>Estado actual</strong>: Demo funcionando end-to-end. Solo accesible para los <strong>5 móviles verificados</strong> en el sandbox de Twilio (limitación del trial). Suficiente para enseñar a los socios y al cliente.
+</div>
+
+<h2 id="stack"><span class="num">2</span>Stack &amp; arquitectura</h2>
+
+<table>
+  <thead>
+    <tr><th>Capa</th><th>Tecnología</th><th>Notas</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Cliente final</td><td>WhatsApp del cliente</td><td>Suscrito al sandbox con <code>join rose-pipe</code></td></tr>
+    <tr><td>Pasarela WhatsApp</td><td>Twilio Sandbox</td><td>Número <code>+1 415 523 8886</code> · Plan Trial ($15.50 crédito)</td></tr>
+    <tr><td>Orquestación</td><td>n8n productivo</td><td><code>manuel-pruebas-n8n.8x5xcn.easypanel.host</code></td></tr>
+    <tr><td>Webhook</td><td>POST <code>/webhook/bocatitos-twilio</code></td><td>Recibe form-data de Twilio</td></tr>
+    <tr><td>Lógica de bot</td><td>n8n Code node (JavaScript)</td><td>Detección de intent + carrito en Static Data</td></tr>
+    <tr><td>Respuesta</td><td>TwiML (XML)</td><td>Sin llamada API extra, Twilio convierte XML en WhatsApp</td></tr>
+    <tr><td>Persistencia</td><td><code>$getWorkflowStaticData('global')</code></td><td>Carrito por <code>WaId</code> (móvil del cliente)</td></tr>
+  </tbody>
+</table>
+
+<h3>Diagrama de flujo</h3>
+
+<pre><code>┌──────────────┐    ┌─────────────────────┐    ┌──────────────────┐    ┌──────────────────┐
+│  Cliente     │ →  │  WhatsApp normal    │ →  │  Twilio Sandbox  │ →  │  POST webhook    │
+│  (móvil)     │    │  +1 415 523 8886    │    │  (US)            │    │  n8n (Easypanel) │
+└──────────────┘    └─────────────────────┘    └──────────────────┘    └────────┬─────────┘
+                                                                                │
+                                          ┌─────────────────────────────────────┘
+                                          ▼
+                              ┌────────────────────────────────┐
+                              │  Code node "Procesa Intent"    │
+                              │  - detecta intent              │
+                              │  - actualiza carrito (static)  │
+                              │  - construye respuesta TwiML   │
+                              └────────────┬───────────────────┘
+                                           ▼
+                              ┌────────────────────────────────┐
+                              │  Respond to Webhook (TwiML)    │
+                              │  Content-Type: application/xml │
+                              └────────────┬───────────────────┘
+                                           ▼
+                              ┌────────────────────────────────┐
+                              │  Twilio recibe XML, manda      │
+                              │  mensaje WhatsApp al cliente   │
+                              └────────────────────────────────┘
+</code></pre>
+
+<h2 id="prereqs"><span class="num">3</span>Pre-requisitos</h2>
+
+<ul>
+  <li>Cuenta Twilio (gratis, registro en <a href="https://twilio.com/try-twilio">twilio.com/try-twilio</a>).</li>
+  <li>Acceso al n8n productivo de Manu.</li>
+  <li>Móvil con WhatsApp para suscribir al sandbox.</li>
+  <li>Para producción real (cliente confirma): número de teléfono dedicado al bot + Facebook Business Manager con identidad verificable.</li>
+</ul>
+
+<h2 id="golden"><span class="num">4</span>Reglas de oro</h2>
+
+<div class="panel panel-ok">
+  <strong>★ Regla 1 — TwiML por defecto.</strong> Para respuestas síncronas al cliente, usa TwiML (XML) devuelto por el nodo "Respond to Webhook" en lugar de hacer una llamada extra a la API de Twilio. Más rápido, más simple, una sola petición de red.
+</div>
+
+<div class="panel panel-ok">
+  <strong>★ Regla 2 — Estado por <code>WaId</code>.</strong> Cada cliente en WhatsApp tiene un <code>WaId</code> único (su número). Indexa el carrito y cualquier estado de sesión por ese ID — nunca por el nombre o el <code>From</code>.
+</div>
+
+<div class="panel panel-ok">
+  <strong>★ Regla 3 — Sin async largo en el handler.</strong> Twilio espera respuesta en menos de 5 segundos o reintenta. Cualquier lógica pesada (LLM, lookup en DB grande) se ejecuta fuera del flujo síncrono (publish a queue, respond ack ahora, procesar después).
+</div>
+
+<div class="panel panel-ok">
+  <strong>★ Regla 4 — Sandbox solo para desarrollo.</strong> Twilio Sandbox limita a 5 destinatarios verificados y muestra prefijo "Sent from your Twilio trial account" en mensajes. Para producción real: migrar a Meta Cloud API directo con número del cliente.
+</div>
+
+<div class="panel panel-ok">
+  <strong>★ Regla 5 — Sticky notes en n8n.</strong> Todo workflow debe tener un sticky note general explicando el flujo + uno por bloque funcional (regla Nuxion). Facilita que cualquier socio entienda el workflow sin pedir contexto.
+</div>
+
+<h2 id="setup"><span class="num">5</span>Procedimiento paso a paso</h2>
+
+<div class="step">
+  <h4><span class="step-num">1.</span>Crear cuenta Twilio y activar Sandbox</h4>
+  <ol>
+    <li>Registro en <a href="https://twilio.com/try-twilio">twilio.com/try-twilio</a>.</li>
+    <li>Elegir plan <strong>Trial</strong> (no Pay as you go).</li>
+    <li>Ir a <code>Messaging → Try it out → Send a WhatsApp message</code>.</li>
+    <li>Apuntar el código <code>join &lt;palabra&gt;</code> que aparece en la pantalla del sandbox.</li>
+  </ol>
+</div>
+
+<div class="step">
+  <h4><span class="step-num">2.</span>Suscribir tu móvil al sandbox</h4>
+  <ol>
+    <li>Abrir WhatsApp en el móvil.</li>
+    <li>Iniciar chat con <code>+1 415 523 8886</code>.</li>
+    <li>Enviar el mensaje exacto <code>join &lt;palabra&gt;</code> (el código del paso 1).</li>
+    <li>Twilio responde con un "You are all set!" confirmando.</li>
+  </ol>
+</div>
+
+<div class="step">
+  <h4><span class="step-num">3.</span>Capturar credenciales</h4>
+  <p>En el Twilio Console, ir a <code>Account → API Keys &amp; tokens</code>:</p>
+  <ul>
+    <li><strong>Account SID</strong>: visible directamente.</li>
+    <li><strong>Auth Token</strong>: pulsar "Show" para revelarlo. Guardar en gestor de contraseñas.</li>
+  </ul>
+  <div class="panel panel-warn" style="margin-top:10px">
+    El Auth Token es secreto. Nunca pegarlo en chats, código público o capturas. Si se filtra, ir a "Request a secondary token" en el mismo panel para rotarlo.
+  </div>
+</div>
+
+<div class="step">
+  <h4><span class="step-num">4.</span>Crear workflow en n8n</h4>
+  <p>En el n8n productivo de Manu:</p>
+  <ol>
+    <li>Nuevo workflow: nombre <code>[Bocatitos] Bot WhatsApp Sandbox - Twilio</code>.</li>
+    <li>Nodo 1: <strong>Webhook</strong> (typeVersion 2.1).
+      <ul>
+        <li>Method: <code>POST</code></li>
+        <li>Path: <code>bocatitos-twilio</code></li>
+        <li>Authentication: <code>None</code></li>
+        <li>Respond: <code>Using 'Respond to Webhook' Node</code></li>
+        <li>onError: <code>continueRegularOutput</code></li>
+      </ul>
+    </li>
+    <li>Nodo 2: <strong>Code</strong> (typeVersion 2) con el JS del cerebro del bot (ver Anexo A).</li>
+    <li>Nodo 3: <strong>Respond to Webhook</strong> (typeVersion 1.5).
+      <ul>
+        <li>Respond With: <code>Text</code></li>
+        <li>Response Body (expresión): <code>=&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;Response&gt;&lt;Message&gt;{{ $json.reply }}&lt;/Message&gt;&lt;/Response&gt;</code></li>
+        <li>Response Code: <code>200</code></li>
+        <li>Header: <code>Content-Type: application/xml</code></li>
+      </ul>
+    </li>
+    <li>Conectar Webhook → Code → Respond.</li>
+    <li><strong>Activar</strong> el workflow (toggle "Active" arriba a la derecha).</li>
+    <li>Copiar la <strong>Production URL</strong> del nodo Webhook.</li>
+  </ol>
+</div>
+
+<div class="step">
+  <h4><span class="step-num">5.</span>Configurar webhook en Twilio</h4>
+  <ol>
+    <li>En Twilio Console, ir a <code>Messaging → Try it out → Send a WhatsApp message → Sandbox settings</code>.</li>
+    <li>En <strong>When a message comes in</strong>: pegar la Production URL del paso 4.</li>
+    <li>Method: <code>POST</code>.</li>
+    <li>Pulsar <strong>Save</strong>.</li>
+  </ol>
+</div>
+
+<div class="step">
+  <h4><span class="step-num">6.</span>Probar end-to-end</h4>
+  <p>Desde el móvil suscrito, mandar al <code>+1 415 523 8886</code>:</p>
+  <ul>
+    <li><code>hola</code> → menú principal.</li>
+    <li><code>1</code> → categorías de carta.</li>
+    <li><code>11</code> → smash burgers con precios.</li>
+    <li><code>quiero un tito trufa y unas bravas</code> → añadido al carrito.</li>
+    <li><code>ver pedido</code> → carrito + total.</li>
+    <li><code>confirmar</code> → ticket cliente + simulación ticket restaurante.</li>
+  </ul>
+</div>
+
+<h2 id="workflow"><span class="num">6</span>Workflow diario</h2>
+
+<p>Una vez todo configurado, las modificaciones del bot son siempre las mismas:</p>
+
+<ol>
+  <li>Abrir el workflow en n8n.</li>
+  <li>Editar el nodo "Procesa Intent" (es donde vive toda la lógica).</li>
+  <li>Probar con <strong>"Execute Node"</strong> usando un payload de ejemplo.</li>
+  <li>Guardar.</li>
+  <li>El workflow ya está activo: la siguiente llamada de Twilio usa el código nuevo.</li>
+</ol>
+
+<p>Para añadir productos nuevos a la carta: editar el objeto <code>PRODUCTS</code> en el Code node, sumar el nombre + precio. Los aliases (mensaje libre) van en el objeto <code>ALIASES</code>.</p>
+
+<h2 id="troubleshooting"><span class="num">7</span>Troubleshooting</h2>
+
+<table>
+  <thead>
+    <tr><th>Síntoma</th><th>Causa</th><th>Solución</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Twilio responde "You said: X. Configure your Inbound URL"</td>
+      <td>Workflow inactivo o URL mal configurada en Twilio</td>
+      <td>Activar el workflow + verificar URL en Sandbox settings</td>
+    </tr>
+    <tr>
+      <td>Bot responde pero sin formato bold/italic</td>
+      <td>WhatsApp formatea con <code>*</code> y <code>_</code></td>
+      <td>Verificar que el reply usa <code>*texto*</code> para negrita y <code>_texto_</code> para cursiva</td>
+    </tr>
+    <tr>
+      <td>Carrito se "olvida" entre mensajes</td>
+      <td>Workflow desactivado entre mensajes (Static Data se pierde al desactivar)</td>
+      <td>Mantener workflow siempre activo. En prod usar DB externa (Supabase)</td>
+    </tr>
+    <tr>
+      <td>El mensaje aparece truncado en WhatsApp</td>
+      <td>Caracteres no escapados en XML</td>
+      <td>Usar <code>&lt;</code>, <code>&gt;</code>, <code>&amp;</code> escapados en el reply (n8n lo hace automático con expresión)</td>
+    </tr>
+    <tr>
+      <td>Detección de productos falla</td>
+      <td>Nombre del producto con tildes/eñes que no matchean el regex</td>
+      <td>Añadir alias en minúsculas y sin tildes en el objeto <code>ALIASES</code></td>
+    </tr>
+    <tr>
+      <td>Twilio Sandbox da timeout</td>
+      <td>Code node tarda &gt;5 segundos</td>
+      <td>Optimizar regex o externalizar lógica pesada a queue</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="lessons"><span class="num">8</span>Lessons learned (changelog)</h2>
+
+<h3>v2.0 · 2026-06-03</h3>
+<ul>
+  <li><strong>Decisión</strong>: Twilio Sandbox elegido sobre Meta Cloud API directo. Meta cambió el flujo en 2025 y dejó imposible añadir el producto "WhatsApp Business" a apps nuevas vía UI. Los permisos <code>whatsapp_business_messaging</code> no aparecen en Graph Explorer ni al generar System User token. Twilio Sandbox lo evita por completo.</li>
+  <li><strong>Lección</strong>: para demos de bots WhatsApp, Twilio Sandbox es 10× más rápido de montar que Meta directo. Para producción real, migrar a Meta con número del cliente.</li>
+  <li><strong>Hallazgo</strong>: TwiML como respuesta sincrona es mucho más simple que llamar a la API de Twilio. Una sola petición de red, sin gestionar Auth Token en HTTP Request.</li>
+  <li><strong>Hallazgo</strong>: <code>$getWorkflowStaticData('global')</code> sirve para carrito de demo. En producción usar Supabase o DataTables — Static Data se pierde al desactivar el workflow.</li>
+  <li><strong>Hallazgo</strong>: detección de productos por regex con ordenación por longitud descendente (matchear primero "patatas bravas" antes de "patatas") funciona bien para la lista corta de Bocatitos.</li>
+</ul>
+
+<h3>v1.0 · 2026-06-03 (mismo día)</h3>
+<ul>
+  <li>Primer prototipo: menú principal + 6 categorías + horario + dirección.</li>
+  <li>Sin carrito persistente, solo eco del mensaje.</li>
+</ul>
+
+<h2 id="migration"><span class="num">9</span>Migración a Meta Cloud API en producción</h2>
+
+<p>Cuando Bocatitos confirme el contrato, migrar de Twilio Sandbox a Meta Cloud API directo:</p>
+
+<ol>
+  <li>Pedir al cliente número dedicado al bot (no su número personal). Vodafone/Yoigo prepago ~5€.</li>
+  <li>Crear Facebook Business Manager con la identidad del cliente (no la nuestra).</li>
+  <li>Crear app de tipo "Empresa" en developers.facebook.com.</li>
+  <li>Vincular WhatsApp Business Account con el número del cliente.</li>
+  <li>Generar System User Token permanente con permisos <code>whatsapp_business_messaging</code>.</li>
+  <li>Modificar el nodo final del workflow: en lugar de "Respond to Webhook" con TwiML, usar HTTP Request POST a <code>https://graph.facebook.com/v21.0/{PHONE_NUMBER_ID}/messages</code> con Bearer token.</li>
+  <li>Suscribir webhook al campo <code>messages</code> en el panel WhatsApp de la app.</li>
+  <li>El resto del Code node (intent + carrito) se reutiliza tal cual.</li>
+</ol>
+
+<p>Estimación: 1-2 horas de trabajo si Meta no pone trabas con la app del cliente.</p>
+
+<hr>
+
+<h2>Anexo A · Código completo del Code node</h2>
+
+<p>El código vive en el nodo "Procesa Intent" del workflow. ID del workflow: <code>zJNISoQxY2npIWHH</code>.</p>
+
+<div class="panel panel-info">
+  La versión más reciente está siempre en el propio n8n. Este anexo es snapshot para reconstrucción desde cero en caso de pérdida.
+</div>
+
+<pre><code>// Bot Bocatitos v2 - Intent + Carrito persistente
+const body = $input.first().json.body || {};
+const rawText = String(body.Body || '').trim();
+const text = rawText.toLowerCase();
+const name = body.ProfileName || 'amigo';
+const from = body.From || '';
+const userId = body.WaId || from || 'anon';
+
+// Carrito persistente
+const staticData = $getWorkflowStaticData('global');
+if (!staticData.carts) staticData.carts = {};
+if (!staticData.carts[userId]) staticData.carts[userId] = [];
+const cart = staticData.carts[userId];
+
+// Catálogo con precios (extracto)
+const PRODUCTS = {
+  'tito gourmet': { name: 'TITO GOURMET', price: 5.50 },
+  'tito trufa':   { name: 'TITO TRUFA',   price: 6.00 },
+  'patatas bravas': { name: 'PATATAS BRAVAS', price: 4.00 },
+  // ... 20 más
+};
+
+const ALIASES = {
+  'bravas': 'patatas bravas',
+  'croqueta': 'croquetas',
+  // ...
+};
+
+// Detecta productos en texto libre
+function detectProducts(t) { /* ... */ }
+
+// Switch-like de intents
+if (!text || /^(hola|hey|menu)$/.test(text)) {
+  reply = 'Menú principal...';
+} else if (text === '1') {
+  reply = 'Carta...';
+} else if (/^(confirmar)$/.test(text)) {
+  // Procesa pedido, genera ticket restaurante
+}
+// ... más ramas
+
+return [{ json: { reply, from, name } }];
+</code></pre>
+
+<footer>
+  Playbook generado por NuxionCloud · 2026-06-03 · Documento auto-contenido, exportable a PDF.<br>
+  <strong>Regla de oro</strong>: cada proyecto Nuxion deja su manual.
+</footer>
+
+</div>
+</body>
+</html>
