@@ -28,7 +28,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="assets/styles.css?v=17">
-<link rel="stylesheet" href="assets/pedido.css?v=2">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -148,7 +147,7 @@
         <p data-i18n="pillars.lead">Tres cartas, una sola cocina. Pincha en el momento que te apetece y ve directamente a su carta.</p>
       </div>
       <div class="pillars">
-        <a class="pillar-card reveal" data-momento="desayuno" href="desayuno.html">
+        <a class="pillar-card reveal" href="desayuno.html">
           <img src="https://images.unsplash.com/photo-1525351484163-7529414344d8?w=900&q=85&auto=format&fit=crop" alt="Desayuno" loading="eager">
           <div class="pc-content">
             <span class="pc-num">01 · <span data-i18n="pillar.1.hours">08:00 – 12:00</span></span>
@@ -157,7 +156,7 @@
             <span class="pc-cta">Ver la carta de desayuno →</span>
           </div>
         </a>
-        <a class="pillar-card reveal reveal-delay-1" data-momento="tapas" href="tapas.html">
+        <a class="pillar-card reveal reveal-delay-1" href="tapas.html">
           <img src="https://images.unsplash.com/photo-1656423521731-9665583f100c?w=900&q=85&auto=format&fit=crop" alt="Tapas" loading="eager">
           <div class="pc-content">
             <span class="pc-num">02 · <span data-i18n="pillar.2.hours">12:00 – 17:00</span></span>
@@ -166,7 +165,7 @@
             <span class="pc-cta">Ver la carta de tapas →</span>
           </div>
         </a>
-        <a class="pillar-card reveal reveal-delay-2" data-momento="streetfood" href="streetfood.html">
+        <a class="pillar-card reveal reveal-delay-2" href="streetfood.html">
           <img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=900&q=85&auto=format&fit=crop" alt="Street Food" loading="eager">
           <div class="pc-content">
             <span class="pc-num">03 · <span data-i18n="pillar.3.hours">19:00 – 00:00</span></span>
@@ -201,23 +200,10 @@
         <span class="ebrow">★ 4,7 · Google Reviews</span>
         <h2 data-i18n-html="rev.title">Lo que dicen de <mark>nosotros.</mark></h2>
       </div>
-
-      <!-- El CTA va ANTES de los comentarios por petición del cliente
-           (13-08-2026): "al final queremos que nos dejen su reseña… ponerlo
-           aquí más arriba primero, para que dejen una reseña, y después los
-           comentarios". Captar reseñas es el objetivo de negocio. -->
-      <div class="tm-cta reveal">
-        <p class="tm-cta-text" data-i18n="rev.cta_text">¿Has comido con nosotros? Cuéntanos tu experiencia y ayuda a otros a descubrir Bocatitos.</p>
-        <a class="btn-mega tm-cta-btn" href="https://www.google.com/maps/search/Bocatitos+Street+Food/@37.4086,-5.9874,17z" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <span data-i18n="rev.cta">Deja tu reseña en Google</span>
-        </a>
-      </div>
-
       <div class="tm-grid" id="tmGrid">
         <div class="tm-card reveal">
           <div class="tm-stars">★★★★★</div>
-          <p class="tm-text">"Las mejores smash burgers de Sevilla. El pan se nota, las salsas son brutales. Pedid EL SANJI sí o sí."</p>
+          <p class="tm-text">"Las mejores smash burgers de Sevilla. El pan se nota, las salsas son brutales. Pedid el TITO SANJI sí o sí."</p>
           <div class="tm-author"><div class="tm-av">M</div><div><div class="tm-name">María L.</div><div class="tm-meta">Google Reviews · hace 2 semanas</div></div></div>
         </div>
         <div class="tm-card reveal reveal-delay-1">
@@ -234,6 +220,14 @@
       <div class="tm-rating-bar reveal">
         <b>4.7</b>
         <span class="lbl">Más de <strong>300+</strong> reseñas en Google · Bocatitos Sevilla</span>
+      </div>
+
+      <div class="tm-cta reveal">
+        <p class="tm-cta-text">¿Has comido con nosotros? Cuéntanos tu experiencia y ayuda a otros a descubrir Bocatitos.</p>
+        <a class="btn-mega tm-cta-btn" href="https://www.google.com/maps/search/Bocatitos+Street+Food/@37.4086,-5.9874,17z" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <span>Deja tu reseña en Google</span>
+        </a>
       </div>
     </div>
   </section>
@@ -284,7 +278,6 @@
 
 <footer class="chrome" id="chrome-foot"></footer>
 <script src="assets/i18n.js?v=5" defer></script>
-<script src="assets/app.js?v=8" defer></script>
-<script src="assets/pedido.js?v=2" defer></script>
+<script src="assets/app.js?v=7" defer></script>
 </body>
 </html>
