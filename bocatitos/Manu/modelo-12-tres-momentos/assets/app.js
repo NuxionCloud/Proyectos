@@ -92,20 +92,10 @@ function mountChrome(){
   const head = $('#chrome-head'); if(head) head.innerHTML = renderHead(active);
   const foot = $('#chrome-foot'); if(foot) foot.innerHTML = renderFoot();
 
-  if(!$('.float-cta')){
-    const f = document.createElement('div');
-    f.className = 'float-cta';
-    f.innerHTML = `
-      <a href="streetfood.html" aria-label="Street Food">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
-        <span>Carta</span>
-      </a>
-      <a class="wapp" href="${WA}" target="_blank" rel="noopener" aria-label="WhatsApp">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 3.5A11.5 11.5 0 0 0 3.6 19l-1.1 4 4.1-1.1A11.5 11.5 0 1 0 20.5 3.5Z"/></svg>
-        <span>WhatsApp</span>
-      </a>`;
-    document.body.appendChild(f);
-  }
+  /* Los accesos rápidos flotantes (Carta + WhatsApp) se retiraron a petición
+     del cliente en la reunión del 13-08-2026: "quítalo para que no tenga mucha
+     información, para que no canse la vista". Su sitio lo ocupa ahora el botón
+     del pedido, que solo aparece cuando el carrito tiene algo. Ver mountCart(). */
 }
 
 /* ---------- Header scroll effect ---------- */
@@ -131,7 +121,7 @@ function mountHeroFloaters(){
   if($('.hero-floaters', hero)) return;
   const FLOATERS = [
     {
-      cls:'f1', tag:'Smash · 17', href:'streetfood.html#smash',
+      cls:'f1', tag:'Smash · 6', href:'streetfood.html#smash',
       imgs:[
         'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=700&q=80&auto=format&fit=crop',
         'https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=700&q=80&auto=format&fit=crop',
@@ -221,7 +211,7 @@ function mountReveal(){
 
 /* ---------- Rotación dinámica de reseñas ---------- */
 const REVIEWS = [
-  { stars:5, initial:'M', name:'María L.',   meta:'Google Reviews · hace 2 semanas', text:'"Las mejores smash burgers de Sevilla. El pan se nota, las salsas son brutales. Pedid el TITO SANJI sí o sí."' },
+  { stars:5, initial:'M', name:'María L.',   meta:'Google Reviews · hace 2 semanas', text:'"Las mejores smash burgers de Sevilla. El pan se nota, las salsas son brutales. Pedid el EL SANJI sí o sí."' },
   { stars:5, initial:'J', name:'Jorge R.',   meta:'Google Reviews · hace 1 mes',     text:'"Local pequeño pero un sabor enorme. He desayunado, comido tapa y cenado bocata aquí. Cariño en cada detalle."' },
   { stars:5, initial:'A', name:'Ana S.',     meta:'Google Reviews · hace 3 semanas', text:'"Trato familiar, ingredientes que se notan. Los hot dogs son los más buenos del barrio."' },
   { stars:5, initial:'D', name:'Daniel G.',  meta:'Google Reviews · hace 1 semana',  text:'"Vengo desde la facultad de medicina cada día. El café es brutal y los montaditos calientes son perfectos."' },
@@ -365,22 +355,65 @@ function mountBurger(){
   $$('nav.primary a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
 }
 
-/* ---------- Menu tabs ---------- */
+/* ---------- Menu tabs · secciones COMPLETAMENTE individuales ----------
+   Petición literal del cliente (13-08-2026): "que estos botones sean
+   completamente individuales y no compartan la misma con los otros… presiono
+   esto, me sale esto, sin irme muy abajo". Antes eran anclas que hacían scroll
+   dentro de una página larga; ahora cada pestaña muestra SOLO su sección. */
 function mountTabs(){
-  const tabs = $$('.mtab'); if(!tabs.length) return;
-  tabs.forEach(btn => {
-    btn.addEventListener('click', () => {
-      tabs.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const cat = btn.dataset.cat;
-      $$('.cat-grid').forEach(g => {
-        if(g.dataset.cat === cat){ g.removeAttribute('hidden'); g.scrollIntoView({ behavior:'smooth', block:'nearest' }); }
-        else g.setAttribute('hidden','');
-      });
+  const tabs = $$('.mtab[data-cat]'); if(!tabs.length) return;
+  const secciones = $$('[data-catsec]');
+  if(!secciones.length) return;
+
+  const activar = (cat, hazScroll) => {
+    tabs.forEach(b => b.classList.toggle('active', b.dataset.cat === cat));
+    secciones.forEach(s => {
+      const suya = s.dataset.catsec === cat;
+      s.hidden = !suya;
+      s.style.display = suya ? '' : 'none';
     });
+    try { history.replaceState(null, '', '?cat=' + cat + location.hash); } catch(_) {}
+    if(hazScroll){
+      const barra = $('.menu-tabs');
+      if(barra) barra.scrollIntoView({ behavior:'smooth', block:'start' });
+    }
+  };
+
+  tabs.forEach(b => b.addEventListener('click', () => activar(b.dataset.cat, true)));
+
+  /* Categoría inicial: ?cat=… , si no el hash heredado (#smash), si no la primera. */
+  const params = new URLSearchParams(location.search);
+  const hash = location.hash.replace('#', '');
+  const pedida = params.get('cat') || hash;
+  const existe = Array.from(tabs).some(b => b.dataset.cat === pedida);
+  activar(existe ? pedida : tabs[0].dataset.cat, false);
+}
+
+/* ---------- Pilares por franja horaria ----------
+   El cliente lo pidió pensando en móvil: "supongamos que es a las 12, esto de
+   alguna manera pasa automáticamente al primero… la gente lo ve más en el móvil".
+   Sin JS se queda el orden natural desayuno → tapas → street food. */
+function mountPillarOrder(){
+  const cont = $('.pillars'); if(!cont) return;
+  const ahora = new Date();
+  const h = ahora.getHours() + ahora.getMinutes() / 60;
+  const orden = (h >= 6 && h < 12.5) ? ['desayuno','tapas','streetfood']
+              : (h >= 12.5 && h < 19) ? ['tapas','streetfood','desayuno']
+              :                         ['streetfood','tapas','desayuno'];
+
+  orden.forEach(k => {
+    const card = $(`.pillar-card[data-momento="${k}"]`, cont);
+    if(card) cont.appendChild(card);
   });
-  const cat = new URLSearchParams(location.search).get('cat');
-  if(cat){ const t = Array.from(tabs).find(b => b.dataset.cat === cat); if(t) t.click(); }
+
+  const activa = $(`.pillar-card[data-momento="${orden[0]}"]`, cont);
+  if(activa && !$('.pc-now', activa)){
+    const badge = document.createElement('span');
+    badge.className = 'pc-now';
+    badge.setAttribute('data-i18n', 'pillar.now');
+    badge.textContent = 'Ahora';
+    (($('.pc-content', activa)) || activa).prepend(badge);
+  }
 }
 
 /* ---------- Loader ---------- */
@@ -404,6 +437,7 @@ document.addEventListener('DOMContentLoaded', () => {
   mountLangDropdown();
   mountBurger();
   mountTabs();
+  mountPillarOrder();
   mountYear();
   mountLoader();
   applyLang(initialLang());

@@ -1,0 +1,202 @@
+/* =====================================================================
+   BOCATITOS · PEDIDO POR WHATSAPP + POP-UP DE DELIVERY
+   Añadido tras la reunión con el cliente del 13-08-2026.
+   Hoja aparte para no tocar styles.css del modelo. Usa sus mismas
+   variables (--accent amarillo sobre negro), así que hereda la estética.
+   ===================================================================== */
+
+/* Botón "Añadir" dentro de cada plato */
+.add-btn{
+  margin-top:14px;display:inline-flex;align-items:center;gap:8px;
+  background:var(--accent);color:var(--ink);
+  padding:9px 16px;border-radius:999px;
+  font-weight:800;font-size:12px;letter-spacing:.06em;text-transform:uppercase;
+  transition:transform var(--t-fast),background var(--t-fast);
+}
+.add-btn:hover{transform:translateY(-2px);background:var(--paper)}
+.add-btn span[aria-hidden]{font-size:15px;line-height:1}
+
+/* Botón flotante del pedido · solo aparece cuando hay líneas */
+.pedido-fab{
+  position:fixed;bottom:22px;right:22px;z-index:80;
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--accent);color:var(--ink);
+  padding:13px 20px;border-radius:999px;
+  font-weight:800;font-size:12px;letter-spacing:.08em;text-transform:uppercase;
+  box-shadow:0 20px 40px -14px rgba(255,224,19,.5);
+  transition:transform var(--t-fast);
+}
+.pedido-fab:hover{transform:translateY(-3px)}
+.pedido-fab[hidden]{display:none}
+.pedido-fab svg{width:18px;height:18px}
+.pedido-num{
+  background:var(--ink);color:var(--accent);border-radius:999px;
+  min-width:20px;height:20px;padding:0 5px;font-size:11px;
+  display:inline-flex;align-items:center;justify-content:center;
+}
+/* Con el flotante visible deja aire abajo para que no tape el final */
+body.con-pedido{padding-bottom:90px}
+
+.pedido-velo{position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);z-index:200}
+.pedido-velo[hidden]{display:none}
+
+/* ---- Cajón lateral del pedido ---- */
+.pedido-drawer{
+  position:fixed;top:0;right:0;bottom:0;z-index:210;
+  width:min(420px,100%);background:var(--bg-2);
+  border-left:3px solid var(--accent);
+  display:flex;flex-direction:column;
+  animation:pedidoEntra .3s var(--t-base);
+}
+.pedido-drawer[hidden]{display:none}
+@keyframes pedidoEntra{from{transform:translateX(30px);opacity:0}to{transform:none;opacity:1}}
+.pedido-drawer > header{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:18px 22px;background:var(--bg);border-bottom:1px solid var(--line);
+}
+.pedido-drawer h2{font-size:20px;font-weight:900;text-transform:uppercase;letter-spacing:-.01em}
+.pedido-x{width:38px;height:38px;display:grid;place-items:center;color:var(--paper);border-radius:50%}
+.pedido-x:hover{color:var(--accent);background:rgba(255,255,255,.06)}
+.pedido-x svg{width:20px;height:20px}
+
+.pedido-vacio{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:20px;padding:30px;text-align:center;color:var(--muted);
+}
+.pedido-vacio[hidden]{display:none}
+.pedido-cuerpo{flex:1;overflow-y:auto;padding:18px 22px}
+.pedido-cuerpo[hidden]{display:none}
+.pedido-mesa{
+  color:var(--accent);font-weight:800;font-size:12px;
+  letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px;
+}
+.pedido-mesa[hidden]{display:none}
+
+.pedido-lineas{display:flex;flex-direction:column;gap:12px}
+.pedido-lineas li{
+  border:1px solid var(--line-strong);border-radius:14px;
+  padding:12px 14px;background:rgba(255,255,255,.02);
+}
+.pl-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.pl-nom{font-weight:700;font-size:14px;line-height:1.3}
+.pl-nom em{color:var(--muted);font-style:normal;font-size:12px}
+.pl-x{color:var(--muted);flex-shrink:0}
+.pl-x:hover{color:#ff5b5b}
+.pl-x svg{width:16px;height:16px}
+.pl-sin{color:var(--accent-warm);font-size:12px;margin-top:4px}
+.pl-bot{display:flex;align-items:center;justify-content:space-between;margin-top:10px}
+.pl-precio{font-weight:900;color:var(--accent)}
+
+.pm-stepper{display:inline-flex;align-items:center;border:1px solid var(--line-strong);border-radius:999px;overflow:hidden}
+.pm-stepper button{width:38px;height:38px;font-size:18px;color:var(--paper)}
+.pm-stepper button:hover{color:var(--accent);background:rgba(255,255,255,.06)}
+.pm-stepper b{min-width:34px;text-align:center;font-weight:800}
+.pm-stepper.sm button{width:32px;height:32px;font-size:16px}
+.pm-stepper.sm b{min-width:28px;font-size:13px}
+
+.pedido-nota{display:block;margin-top:18px}
+.pedido-nota span{
+  display:block;color:var(--muted);font-size:11px;
+  letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px;
+}
+.pedido-nota textarea{
+  width:100%;background:var(--bg);border:1px solid var(--line-strong);border-radius:12px;
+  color:var(--paper);padding:10px 12px;font-family:inherit;font-size:13px;resize:none;
+}
+.pedido-nota textarea:focus{outline:none;border-color:var(--accent)}
+
+.pedido-pie{padding:18px 22px;background:var(--bg);border-top:1px solid var(--line)}
+.pedido-pie[hidden]{display:none}
+.pedido-total{display:flex;align-items:center;justify-content:space-between;font-weight:900;text-transform:uppercase;font-size:18px}
+.pedido-total b{color:var(--accent);font-size:22px}
+.pedido-enviar{
+  margin-top:14px;width:100%;display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  background:#25D366;color:#fff;padding:15px;border-radius:999px;
+  font-weight:800;font-size:13px;letter-spacing:.07em;text-transform:uppercase;
+  transition:transform var(--t-fast),background var(--t-fast);
+}
+.pedido-enviar:hover{transform:translateY(-2px);background:#1faa53}
+.pedido-enviar svg{width:18px;height:18px}
+.pedido-ayuda{color:var(--muted);font-size:11px;text-align:center;margin-top:8px;line-height:1.4}
+.pedido-vaciar{
+  display:block;width:100%;margin-top:10px;color:var(--muted);
+  font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+}
+.pedido-vaciar:hover{color:#ff5b5b}
+
+/* ---- Modal de personalización ---- */
+.pedido-modal{position:fixed;inset:0;z-index:220;display:flex;align-items:flex-end;justify-content:center}
+.pedido-modal[hidden]{display:none}
+@media (min-width:700px){.pedido-modal{align-items:center;padding:24px}}
+.pm-caja{
+  width:min(480px,100%);max-height:88vh;display:flex;flex-direction:column;
+  background:var(--bg-2);border:2px solid var(--accent);
+  border-radius:22px 22px 0 0;overflow:hidden;
+  animation:pedidoEntra .28s var(--t-base);
+}
+@media (min-width:700px){.pm-caja{border-radius:22px}}
+.pm-caja > header{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:14px;
+  padding:18px 20px;background:var(--bg);border-bottom:1px solid var(--line);
+}
+.pm-ebrow{color:var(--accent);font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+.pm-caja h3{font-size:19px;font-weight:900;text-transform:uppercase;line-height:1.15;margin-top:3px}
+.pm-cuerpo{padding:18px 20px;overflow-y:auto;display:flex;flex-direction:column;gap:20px}
+.pm-tamanos{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.pm-tamanos[hidden]{display:none}
+.pm-tam{border:1px solid var(--line-strong);border-radius:12px;padding:12px;font-weight:700;font-size:13px;color:var(--paper)}
+.pm-tam.activa{background:var(--accent);color:var(--ink);border-color:var(--accent)}
+.pm-ings[hidden]{display:none}
+.pm-hint{color:var(--muted);font-size:12px;margin-bottom:10px}
+.pm-ings ul{display:flex;flex-direction:column;gap:8px}
+.pm-ings label{display:flex;align-items:center;gap:10px;cursor:pointer;font-size:14px}
+.pm-ings input{width:18px;height:18px;accent-color:var(--accent);cursor:pointer}
+.pm-uds{display:flex;align-items:center;justify-content:space-between}
+.pm-uds > span{color:var(--muted);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+.pm-caja > footer{padding:16px 20px;background:var(--bg);border-top:1px solid var(--line)}
+.pm-confirmar{
+  width:100%;background:var(--accent);color:var(--ink);padding:15px;border-radius:999px;
+  font-weight:900;font-size:13px;letter-spacing:.07em;text-transform:uppercase;
+  transition:transform var(--t-fast),background var(--t-fast);
+}
+.pm-confirmar:hover{transform:translateY(-2px);background:var(--paper)}
+
+/* ---- Distintivo "Ahora" en el momento del día activo ---- */
+.pc-now{
+  display:inline-block;background:var(--accent);color:var(--ink);
+  padding:4px 10px;border-radius:999px;margin-bottom:8px;
+  font-size:10px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;
+}
+
+/* ---- Pop-up de delivery ---- */
+.dpop{
+  position:fixed;inset:0;z-index:300;display:flex;align-items:center;justify-content:center;
+  padding:20px;background:rgba(0,0,0,.82);backdrop-filter:blur(5px);
+}
+.dpop-caja{
+  position:relative;width:min(460px,100%);background:var(--bg-2);
+  border:3px solid var(--accent);border-radius:22px;overflow:hidden;text-align:center;
+  animation:pedidoEntra .35s var(--t-base);
+}
+.dpop-x{
+  position:absolute;top:10px;right:10px;z-index:2;width:38px;height:38px;
+  display:grid;place-items:center;border-radius:50%;background:rgba(0,0,0,.55);color:#fff;
+}
+.dpop-x:hover{color:var(--accent)}
+.dpop-x svg{width:20px;height:20px}
+.dpop-media{position:relative;aspect-ratio:16/8;background:#000}
+.dpop-media video{width:100%;height:100%;object-fit:cover;opacity:.75}
+.dpop-tag{
+  position:absolute;left:50%;bottom:10px;transform:translateX(-50%);
+  background:var(--accent-warm);color:#fff;padding:5px 14px;border-radius:999px;
+  font-size:11px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;
+}
+.dpop-txt{padding:22px 24px 26px}
+.dpop-txt h2{font-size:clamp(24px,6vw,32px);font-weight:900;text-transform:uppercase;line-height:1.05}
+.dpop-txt p{color:var(--muted);font-size:14px;margin-top:12px}
+.dpop-txt .btn-mega{margin-top:18px;width:100%;justify-content:center}
+.dpop-seguir{
+  display:block;width:100%;margin-top:10px;color:var(--muted);
+  font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+}
+.dpop-seguir:hover{color:var(--paper)}
