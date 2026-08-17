@@ -1,0 +1,109 @@
+---
+/**
+ * DeliveryPopup · aviso de delivery (petición reunión 13-08-2026).
+ *
+ * Se muestra SOLO viernes, sábado y domingo entre las 17:00 y las 23:59,
+ * una vez por sesión de navegación (sessionStorage). El cliente puede
+ * cerrarlo o ir directo a la carta de street food a pedir.
+ *
+ * Para enseñarlo cualquier día (demo con el cliente): añadir ?popup=1.
+ * Hueco preparado para vídeo: sustituir el bloque .popup-media si el
+ * cliente aporta un vídeo corto (mp4 muted loop).
+ */
+---
+
+<div
+  class="dpopup hidden fixed inset-0 z-[340] items-center justify-center p-md bg-black/80 backdrop-blur-sm"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Delivery disponible esta noche"
+  data-dpopup
+>
+  <div class="relative w-full max-w-md bg-dark border-[3px] border-yellow text-center overflow-hidden">
+    <button
+      type="button"
+      class="absolute top-2xs right-2xs z-10 p-2xs text-white/80 hover:text-yellow transition-colors"
+      data-dpopup-close
+      aria-label="Cerrar aviso de delivery"
+      data-i18n-attr="aria-label:popup.close_aria"
+    >
+      <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+    </button>
+
+    <!-- Hueco para vídeo/foto del delivery (por ahora foto de la casa) -->
+    <div class="popup-media relative aspect-[16/8] bg-black">
+      <img
+        src="/oficial/tito-bb.jpg"
+        alt=""
+        class="w-full h-full object-cover opacity-70"
+        loading="eager"
+        decoding="async"
+      />
+      <span class="absolute inset-0 bg-gradient-to-t from-dark to-transparent" aria-hidden="true"></span>
+      <span class="absolute bottom-2xs left-1/2 -translate-x-1/2 font-condensed tracking-widest uppercase text-sm bg-red text-white px-xs py-2xs" data-i18n="popup.eyebrow">
+        Esta noche · Delivery
+      </span>
+    </div>
+
+    <div class="px-md pb-md pt-sm">
+      <h2 class="font-display uppercase text-white leading-[0.95] text-[clamp(1.75rem,6vw,2.5rem)]" data-i18n="popup.title">
+        Bocatitos, en tu casa
+      </h2>
+      <p class="mt-sm text-white/75 text-sm" data-i18n="popup.lead">
+        Viernes, sábado y domingo por la noche repartimos a domicilio a menos de 2 km.
+        Smash burgers, bocatas y hot dogs recién hechos.
+      </p>
+      <a
+        href="/carta#smash"
+        class="mt-md inline-flex w-full items-center justify-center gap-2xs bg-yellow text-black px-md py-sm font-condensed text-lg tracking-widest uppercase hover:bg-white transition-colors"
+        data-dpopup-cta
+      >
+        <span data-i18n="popup.cta">Pedir ahora</span> →
+      </a>
+      <button
+        type="button"
+        class="mt-xs w-full text-center font-condensed text-sm tracking-widest uppercase text-white/50 hover:text-white transition-colors"
+        data-dpopup-close
+      >
+        <span data-i18n="popup.close">Seguir a la web</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const KEY = 'bocatitos.dpopup.shown';
+  const popup = document.querySelector<HTMLElement>('[data-dpopup]');
+
+  const shouldShow = () => {
+    if (!popup) return false;
+    if (new URLSearchParams(location.search).has('popup')) return true; // preview forzado
+    if (sessionStorage.getItem(KEY)) return false;
+    const now = new Date();
+    const day = now.getDay(); // 0 dom · 5 vie · 6 sáb
+    const deliveryDay = day === 5 || day === 6 || day === 0;
+    const deliveryHour = now.getHours() >= 17;
+    return deliveryDay && deliveryHour;
+  };
+
+  const close = () => {
+    popup?.classList.add('hidden');
+    popup?.classList.remove('flex');
+    document.body.style.overflow = '';
+  };
+
+  if (shouldShow()) {
+    // Pequeño retardo para no pisar el primer paint del hero.
+    setTimeout(() => {
+      popup?.classList.remove('hidden');
+      popup?.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+      sessionStorage.setItem(KEY, '1');
+    }, 1200);
+  }
+
+  popup?.querySelectorAll('[data-dpopup-close]').forEach((b) => b.addEventListener('click', close));
+  popup?.querySelector('[data-dpopup-cta]')?.addEventListener('click', close);
+  popup?.addEventListener('click', (e) => { if (e.target === popup) close(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+</script>

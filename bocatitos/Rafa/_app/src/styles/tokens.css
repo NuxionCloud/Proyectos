@@ -1,0 +1,102 @@
+/* ──────────────────────────────────────────────
+   Bocatitos · Design Tokens
+   Paleta, tipografía, espaciado, motion.
+   Modificar aquí cambia toda la web.
+   ────────────────────────────────────────────── */
+
+:root {
+  /* ─── Color ─── */
+  --black: #0A0A0A;
+  --dark: #141414;
+  --darker: #1F1F1F;
+  --white: #FFFFFF;
+  --red: #E63027;
+  --red-dark: #B81F18;
+  --yellow: #FFE013;       /* Amarillo oficial del logo Bocatitos */
+  --cream: #F4E4C1;
+  --wa-green: #25D366;       /* Verde oficial WhatsApp */
+  --wa-green-dark: #1DA851;
+
+  /* Tints utilitarios (mezclas RGB para overlays) */
+  --black-rgb: 10, 10, 10;
+  --red-rgb: 230, 48, 39;
+  --yellow-rgb: 255, 224, 19;
+  --white-rgb: 255, 255, 255;
+
+  /* ─── Sub-paletas por categoría ───
+     Cada pillar tiene su acento. Usar via [data-category="..."]
+     para teñir cards, headings de sección, hover states.            */
+
+  /* Desayuno · solo consumo en local · verde campo + amarillo */
+  --cat-desayuno: #2D4A2B;
+  --cat-desayuno-soft: #4A6B47;
+  --cat-desayuno-accent: var(--yellow);
+
+  /* Tapas · domicilio · TBD por cliente (propuesta: terracota Sevilla) */
+  --cat-tapas: #C8553D;
+  --cat-tapas-soft: #E07A63;
+  --cat-tapas-accent: var(--cream);
+
+  /* Street food · domicilio · amarillo + negro (cercano al hilo de marca) */
+  --cat-streetfood: var(--yellow);
+  --cat-streetfood-soft: #FFE966;
+  --cat-streetfood-accent: var(--black);
+
+  /* ─── Tipografía ─── */
+  --font-display: 'Archivo Black', system-ui, sans-serif;
+  --font-condensed: 'Bebas Neue', Impact, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+
+  /* Escala fluida (clamp para responsive sin breakpoints) */
+  --text-xs: clamp(0.75rem, 0.7vw + 0.6rem, 0.8125rem);
+  --text-sm: clamp(0.875rem, 0.5vw + 0.75rem, 0.9375rem);
+  --text-base: clamp(1rem, 0.5vw + 0.875rem, 1.0625rem);
+  --text-lg: clamp(1.125rem, 0.75vw + 1rem, 1.25rem);
+  --text-xl: clamp(1.375rem, 1vw + 1.125rem, 1.625rem);
+  --text-2xl: clamp(1.75rem, 1.5vw + 1.375rem, 2.125rem);
+  --text-3xl: clamp(2.25rem, 2vw + 1.75rem, 3rem);
+  --text-4xl: clamp(3rem, 3vw + 2.25rem, 4.5rem);
+  --text-5xl: clamp(4rem, 5vw + 2.5rem, 7rem);
+  --text-6xl: clamp(5rem, 7vw + 3rem, 10rem);
+
+  /* ─── Espaciado (escala 1.5x) ─── */
+  --space-2xs: 0.5rem;   /* 8px */
+  --space-xs: 0.75rem;   /* 12px */
+  --space-sm: 1rem;      /* 16px */
+  --space-md: 1.5rem;    /* 24px */
+  --space-lg: 2.5rem;    /* 40px */
+  --space-xl: 4rem;      /* 64px */
+  --space-2xl: 6.5rem;   /* 104px */
+
+  /* ─── Layout ─── */
+  --wrap-max: 1400px;
+  --wrap-padding: clamp(1rem, 4vw, 2.5rem);
+  --section-padding-y: clamp(3rem, 8vw, 6.5rem);
+
+  /* ─── Motion ─── */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-fast: 180ms;
+  --duration-base: 300ms;
+  --duration-slow: 600ms;
+  --stagger: 100ms;
+
+  /* ─── Bordes ─── */
+  --border-thin: 1px;
+  --border-medium: 2px;
+  --border-thick: 3px;
+
+  /* ─── Sombras ─── */
+  --shadow-sticker: 6px 6px 0 rgba(0, 0, 0, 0.85);
+  --shadow-card: 0 24px 60px -20px rgba(0, 0, 0, 0.8);
+  --shadow-red-glow: 0 0 40px rgba(var(--red-rgb), 0.5);
+
+  /* ─── Z-index escalado ─── */
+  --z-base: 1;
+  --z-sticky: 50;
+  --z-header: 100;
+  --z-overlay: 200;
+  --z-modal: 300;
+  --z-toast: 400;
+}

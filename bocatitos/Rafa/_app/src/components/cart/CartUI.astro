@@ -1,0 +1,442 @@
+---
+/**
+ * CartUI · carrito → WhatsApp (demo 4 · agosto 2026).
+ *
+ * Flujo: [+ Añadir] en una card de /carta → modal de personalización
+ * (tamaño media/entera si aplica · cantidad · quitar ingredientes) →
+ * línea en el drawer → "Enviar pedido por WhatsApp" abre wa.me con el
+ * pedido ya escrito. SIN backend: el pedido llega como chat normal al
+ * WhatsApp Business del local.
+ *
+ * - Estado en localStorage ('bocatitos.cart.v1') · sobrevive a la navegación.
+ * - Mesa por QR: ?mesa=L1 se guarda y se añade al mensaje.
+ * - El mensaje SIEMPRE va en español (lo lee la cocina), aunque la web
+ *   esté en otro idioma. El chrome del carrito sí se traduce (data-i18n).
+ */
+import { getEntry } from 'astro:content';
+
+const local = (await getEntry('settings', 'local'))?.data;
+const phone = local?.whatsapp ?? '34641293669';
+---
+
+<!-- Botón flotante SOLO con el pedido no vacío (no es el acceso rápido retirado:
+     aparece únicamente cuando hay líneas, como "ir a tu pedido"). -->
+<button
+  type="button"
+  class="cart-fab hidden fixed bottom-md right-md z-[150] items-center gap-2xs bg-yellow text-black px-md py-sm font-condensed text-lg tracking-widest uppercase shadow-lg border-2 border-black/20"
+  data-cart-open
+  aria-label="Abrir el pedido"
+  data-i18n-attr="aria-label:cart.open_aria"
+>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="20" height="20" aria-hidden="true">
+    <path d="M6 7h12l-1.2 12.2a1.6 1.6 0 0 1-1.6 1.4H8.8a1.6 1.6 0 0 1-1.6-1.4L6 7Z" />
+    <path d="M9 9V6a3 3 0 0 1 6 0v3" />
+  </svg>
+  <span data-i18n="cart.title">Tu pedido</span>
+  <span class="cart-count-pill bg-black text-yellow rounded-full min-w-6 h-6 px-1 inline-flex items-center justify-center text-sm" data-cart-count>0</span>
+</button>
+
+<!-- Overlay compartido drawer/modal -->
+<div class="cart-overlay hidden fixed inset-0 z-[250] bg-black/70 backdrop-blur-sm" data-cart-overlay></div>
+
+<!-- Drawer del pedido -->
+<aside
+  class="cart-drawer hidden fixed top-0 right-0 bottom-0 z-[300] w-full sm:max-w-[420px] bg-dark border-l-[3px] border-yellow flex-col"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Tu pedido"
+  data-i18n-attr="aria-label:cart.title"
+  data-cart-drawer
+>
+  <header class="flex items-center justify-between gap-sm px-md py-sm border-b-2 border-white/10 bg-black">
+    <h2 class="font-display uppercase text-xl text-white"><span data-i18n="cart.title">Tu pedido</span></h2>
+    <button type="button" class="p-2xs text-white hover:text-yellow transition-colors" data-cart-close aria-label="Cerrar el pedido" data-i18n-attr="aria-label:cart.close_aria">
+      <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+    </button>
+  </header>
+
+  <!-- Estado vacío -->
+  <div class="cart-empty flex-1 flex flex-col items-center justify-center gap-md px-lg text-center" data-cart-empty>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="52" height="52" aria-hidden="true" class="text-white/30">
+      <path d="M6 7h12l-1.2 12.2a1.6 1.6 0 0 1-1.6 1.4H8.8a1.6 1.6 0 0 1-1.6-1.4L6 7Z" />
+      <path d="M9 9V6a3 3 0 0 1 6 0v3" />
+    </svg>
+    <p class="text-white/70" data-i18n="cart.empty">Aún no has añadido nada. Ve a la carta y elige lo que te apetezca.</p>
+    <a href="/carta" class="inline-flex items-center gap-2xs bg-yellow text-black px-md py-xs font-condensed text-base tracking-widest uppercase" data-cart-close-link>
+      <span data-i18n="cart.go_menu">Ver la carta</span> →
+    </a>
+  </div>
+
+  <!-- Líneas -->
+  <div class="cart-body hidden flex-1 overflow-y-auto px-md py-sm" data-cart-body>
+    <p class="cart-mesa hidden mb-sm font-condensed tracking-widest uppercase text-sm text-yellow" data-cart-mesa></p>
+    <ul class="flex flex-col gap-sm" data-cart-lines></ul>
+    <label class="block mt-md">
+      <span class="font-condensed text-sm tracking-widest uppercase text-white/60" data-i18n="cart.note_label">Nota para cocina (opcional)</span>
+      <textarea
+        class="mt-2xs w-full bg-black border-2 border-white/15 text-white text-sm p-xs focus:border-yellow outline-none resize-none"
+        rows="2"
+        maxlength="200"
+        data-cart-note
+        placeholder="Ej.: la tostada premium de jamón serrano, en mollete…"
+        data-i18n-attr="placeholder:cart.note_ph"
+      ></textarea>
+    </label>
+  </div>
+
+  <!-- Footer -->
+  <footer class="cart-footer hidden border-t-2 border-white/10 bg-black px-md py-sm" data-cart-footer>
+    <div class="flex items-center justify-between font-display uppercase text-white text-xl">
+      <span data-i18n="cart.total">Total</span>
+      <span class="text-yellow" data-cart-total>0,00 €</span>
+    </div>
+    <button
+      type="button"
+      class="mt-sm w-full inline-flex items-center justify-center gap-2xs bg-whatsapp text-white px-md py-sm font-condensed text-lg tracking-widest uppercase hover:bg-whatsapp-dark transition-colors"
+      data-cart-send
+    >
+      <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20" aria-hidden="true"><path d="M20.5 3.5A11.5 11.5 0 0 0 3.6 19l-1.1 4 4.1-1.1A11.5 11.5 0 1 0 20.5 3.5Z"/></svg>
+      <span data-i18n="cart.send_wa">Enviar pedido por WhatsApp</span>
+    </button>
+    <p class="mt-2xs text-center text-xs text-white/50" data-i18n="cart.send_hint">Se abre tu WhatsApp con el pedido escrito. Solo tienes que darle a enviar.</p>
+    <button type="button" class="mt-xs w-full text-center font-condensed text-sm tracking-widest uppercase text-white/50 hover:text-red transition-colors" data-cart-clear>
+      <span data-i18n="cart.clear">Vaciar pedido</span>
+    </button>
+  </footer>
+</aside>
+
+<!-- Modal de personalización -->
+<div
+  class="cart-modal hidden fixed inset-0 z-[320] items-end sm:items-center justify-center p-0 sm:p-md"
+  role="dialog"
+  aria-modal="true"
+  aria-label="¿Lo personalizamos?"
+  data-i18n-attr="aria-label:cart.customize"
+  data-cart-modal
+>
+  <div class="w-full sm:max-w-md bg-dark border-2 border-yellow max-h-[88vh] flex flex-col">
+    <header class="px-md py-sm bg-black border-b-2 border-white/10 flex items-start justify-between gap-sm">
+      <div>
+        <p class="font-condensed text-sm tracking-widest uppercase text-yellow" data-i18n="cart.customize">¿Lo personalizamos?</p>
+        <h3 class="font-display uppercase text-xl text-white leading-tight" data-modal-nombre>—</h3>
+      </div>
+      <button type="button" class="p-2xs text-white hover:text-yellow transition-colors" data-modal-cancel aria-label="Cancelar" data-i18n-attr="aria-label:cart.cancel">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+      </button>
+    </header>
+
+    <div class="px-md py-sm overflow-y-auto flex flex-col gap-md">
+      <!-- Tamaño media/entera (solo tostadas) -->
+      <div class="hidden" data-modal-variants>
+        <div class="grid grid-cols-2 gap-2xs" role="radiogroup" aria-label="Tamaño">
+          <button type="button" class="variant-btn font-condensed tracking-widest uppercase py-xs border-2 border-white/20 text-white" data-variant="media">
+            <span data-i18n="card.media">Media</span> · <span data-variant-price="media"></span>
+          </button>
+          <button type="button" class="variant-btn is-active font-condensed tracking-widest uppercase py-xs border-2 border-white/20 text-white" data-variant="entera">
+            <span data-i18n="card.entera">Entera</span> · <span data-variant-price="entera"></span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Ingredientes -->
+      <div class="hidden" data-modal-ings>
+        <p class="text-xs text-white/50 mb-2xs" data-i18n="cart.customize_hint">Desmarca lo que no quieras. Lo demás va completo.</p>
+        <ul class="flex flex-col gap-2xs" data-modal-ing-list></ul>
+      </div>
+
+      <!-- Cantidad -->
+      <div class="flex items-center justify-between">
+        <span class="font-condensed text-sm tracking-widest uppercase text-white/60" data-i18n="cart.qty">Cantidad</span>
+        <div class="inline-flex items-center border-2 border-white/20">
+          <button type="button" class="w-10 h-10 text-white text-xl hover:text-yellow" data-modal-qty-minus aria-label="Menos">−</button>
+          <span class="w-10 text-center text-white font-display" data-modal-qty>1</span>
+          <button type="button" class="w-10 h-10 text-white text-xl hover:text-yellow" data-modal-qty-plus aria-label="Más">+</button>
+        </div>
+      </div>
+    </div>
+
+    <footer class="px-md py-sm bg-black border-t-2 border-white/10">
+      <button type="button" class="w-full bg-yellow text-black px-md py-sm font-condensed text-lg tracking-widest uppercase hover:bg-white transition-colors" data-modal-confirm>
+        <span data-i18n="cart.add_confirm">Añadir al pedido</span> · <span data-modal-confirm-price></span>
+      </button>
+    </footer>
+  </div>
+</div>
+
+<script define:vars={{ phone }}>
+  // ───────────────────────── estado ─────────────────────────
+  const LS_CART = 'bocatitos.cart.v1';
+  const LS_MESA = 'bocatitos.mesa';
+
+  const load = () => {
+    try { return JSON.parse(localStorage.getItem(LS_CART) || '[]'); } catch { return []; }
+  };
+  const save = (c) => localStorage.setItem(LS_CART, JSON.stringify(c));
+  let cart = load();
+
+  // Mesa vía QR: ?mesa=L1 (se recuerda durante 3 h)
+  const mesaParam = new URLSearchParams(location.search).get('mesa');
+  if (mesaParam && /^[a-z0-9-]{1,6}$/i.test(mesaParam)) {
+    localStorage.setItem(LS_MESA, JSON.stringify({ v: mesaParam.toUpperCase(), t: Date.now() }));
+  }
+  const getMesa = () => {
+    try {
+      const m = JSON.parse(localStorage.getItem(LS_MESA) || 'null');
+      if (m && Date.now() - m.t < 3 * 60 * 60 * 1000) return m.v;
+    } catch {}
+    return null;
+  };
+
+  const eur = (n) => n.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+  const total = () => cart.reduce((s, l) => s + l.precio * l.qty, 0);
+  const count = () => cart.reduce((s, l) => s + l.qty, 0);
+
+  // ───────────────────────── DOM refs ─────────────────────────
+  const $ = (sel) => document.querySelector(sel);
+  const $$ = (sel) => document.querySelectorAll(sel);
+  const overlay = $('[data-cart-overlay]');
+  const drawer = $('[data-cart-drawer]');
+  const modal = $('[data-cart-modal]');
+  const fab = $('.cart-fab');
+
+  // ───────────────────────── render ─────────────────────────
+  const render = () => {
+    const n = count();
+    $$('[data-cart-count]').forEach((el) => (el.textContent = String(n)));
+    if (fab) {
+      fab.classList.toggle('hidden', n === 0);
+      fab.classList.toggle('inline-flex', n > 0);
+      // Con el botón flotante visible, reserva espacio al final para que no
+      // tape el último bloque de contenido (footer, contador de reseñas…).
+      document.body.classList.toggle('has-cart-fab', n > 0);
+    }
+
+    const empty = $('[data-cart-empty]');
+    const body = $('[data-cart-body]');
+    const footer = $('[data-cart-footer]');
+    const has = cart.length > 0;
+    empty?.classList.toggle('hidden', has);
+    empty?.classList.toggle('flex', !has);
+    body?.classList.toggle('hidden', !has);
+    footer?.classList.toggle('hidden', !has);
+
+    const mesaEl = $('[data-cart-mesa]');
+    const mesa = getMesa();
+    if (mesaEl) {
+      mesaEl.classList.toggle('hidden', !mesa);
+      if (mesa) mesaEl.textContent = `📍 Mesa ${mesa}`;
+    }
+
+    const lines = $('[data-cart-lines]');
+    if (lines) {
+      lines.innerHTML = '';
+      cart.forEach((l, i) => {
+        const li = document.createElement('li');
+        li.className = 'border-2 border-white/10 bg-black/40 p-xs';
+        const sin = l.sin?.length ? `<p class="text-xs text-red mt-2xs">· sin ${l.sin.join(' · sin ')}</p>` : '';
+        const variante = l.variante ? ` <span class="text-white/50 text-xs">(${l.variante})</span>` : '';
+        li.innerHTML = `
+          <div class="flex items-start justify-between gap-xs">
+            <p class="text-white font-semibold text-sm leading-tight">${l.nombre}${variante}${sin ? '' : ''}</p>
+            <button type="button" class="text-white/40 hover:text-red shrink-0" data-line-remove="${i}" aria-label="Quitar del pedido">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 6l12 12M18 6L6 18"/></svg>
+            </button>
+          </div>
+          ${sin}
+          <div class="mt-xs flex items-center justify-between">
+            <div class="inline-flex items-center border border-white/20">
+              <button type="button" class="w-8 h-8 text-white hover:text-yellow" data-line-minus="${i}" aria-label="Menos">−</button>
+              <span class="w-8 text-center text-white text-sm">${l.qty}</span>
+              <button type="button" class="w-8 h-8 text-white hover:text-yellow" data-line-plus="${i}" aria-label="Más">+</button>
+            </div>
+            <span class="font-display text-yellow">${eur(l.precio * l.qty)}</span>
+          </div>`;
+        lines.appendChild(li);
+      });
+    }
+    const totalEl = $('[data-cart-total]');
+    if (totalEl) totalEl.textContent = eur(total());
+  };
+
+  // ───────────────────────── drawer open/close ─────────────────────────
+  const openDrawer = () => {
+    render();
+    overlay?.classList.remove('hidden');
+    drawer?.classList.remove('hidden');
+    drawer?.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+  };
+  const closeDrawer = () => {
+    overlay?.classList.add('hidden');
+    drawer?.classList.add('hidden');
+    drawer?.classList.remove('flex');
+    document.body.style.overflow = '';
+  };
+
+  document.addEventListener('click', (e) => {
+    const t = e.target instanceof Element ? e.target : null;
+    if (!t) return;
+    if (t.closest('[data-cart-open]')) { e.preventDefault(); openDrawer(); }
+    if (t.closest('[data-cart-close]') || t.closest('[data-cart-close-link]')) closeDrawer();
+    const rm = t.closest('[data-line-remove]');
+    if (rm) { cart.splice(Number(rm.getAttribute('data-line-remove')), 1); save(cart); render(); }
+    const minus = t.closest('[data-line-minus]');
+    if (minus) {
+      const i = Number(minus.getAttribute('data-line-minus'));
+      cart[i].qty > 1 ? cart[i].qty-- : cart.splice(i, 1);
+      save(cart); render();
+    }
+    const plus = t.closest('[data-line-plus]');
+    if (plus) { const i = Number(plus.getAttribute('data-line-plus')); if (cart[i].qty < 9) cart[i].qty++; save(cart); render(); }
+  });
+  overlay?.addEventListener('click', () => { closeDrawer(); closeModal(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeDrawer(); closeModal(); } });
+
+  $('[data-cart-clear]')?.addEventListener('click', () => { cart = []; save(cart); render(); });
+
+  // ───────────────────────── modal personalización ─────────────────────────
+  let draft = null; // {slug, nombre, precioEntera, precioMedia, ings[], variante, qty, sin[]}
+
+  const modalPrice = () => {
+    if (!draft) return 0;
+    const unit = draft.variante === 'media' ? draft.precioMedia : draft.precioEntera;
+    return unit * draft.qty;
+  };
+  const paintModal = () => {
+    if (!draft) return;
+    const q = $('[data-modal-qty]'); if (q) q.textContent = String(draft.qty);
+    $$('.variant-btn').forEach((b) => b.classList.toggle('is-active', b.getAttribute('data-variant') === draft.variante));
+    const p = $('[data-modal-confirm-price]'); if (p) p.textContent = eur(modalPrice());
+  };
+  const openModal = (btn) => {
+    const d = btn.dataset;
+    const ings = (() => { try { return JSON.parse(d.ing || '[]'); } catch { return []; } })();
+    draft = {
+      slug: d.slug,
+      nombre: d.nombre,
+      precioEntera: parseFloat(d.precio),
+      precioMedia: d.precioMedia ? parseFloat(d.precioMedia) : null,
+      ings,
+      variante: d.precioMedia ? 'entera' : null,
+      qty: 1,
+      sin: [],
+    };
+    const nom = $('[data-modal-nombre]'); if (nom) nom.textContent = draft.nombre;
+
+    const variants = $('[data-modal-variants]');
+    if (variants) {
+      variants.classList.toggle('hidden', !draft.precioMedia);
+      if (draft.precioMedia) {
+        const pm = $('[data-variant-price="media"]'); if (pm) pm.textContent = eur(draft.precioMedia);
+        const pe = $('[data-variant-price="entera"]'); if (pe) pe.textContent = eur(draft.precioEntera);
+      }
+    }
+
+    const wrap = $('[data-modal-ings]');
+    const list = $('[data-modal-ing-list]');
+    if (wrap && list) {
+      wrap.classList.toggle('hidden', ings.length === 0);
+      list.innerHTML = '';
+      ings.forEach((ing, i) => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <label class="flex items-center gap-xs text-sm text-white/85 cursor-pointer select-none">
+            <input type="checkbox" checked data-ing-idx="${i}" class="accent-[color:var(--yellow)] w-4 h-4" />
+            <span>${String(ing).replace(/</g, '&lt;')}</span>
+          </label>`;
+        list.appendChild(li);
+      });
+    }
+
+    paintModal();
+    overlay?.classList.remove('hidden');
+    modal?.classList.remove('hidden');
+    modal?.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+  };
+  const closeModal = () => {
+    modal?.classList.add('hidden');
+    modal?.classList.remove('flex');
+    if (drawer?.classList.contains('hidden')) {
+      overlay?.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+    draft = null;
+  };
+
+  document.addEventListener('click', (e) => {
+    const t = e.target instanceof Element ? e.target : null;
+    if (!t) return;
+    const addBtn = t.closest('[data-cart-add]');
+    if (addBtn) { e.preventDefault(); openModal(addBtn); }
+    if (t.closest('[data-modal-cancel]')) closeModal();
+    const vb = t.closest('.variant-btn');
+    if (vb && draft) { draft.variante = vb.getAttribute('data-variant'); paintModal(); }
+    if (t.closest('[data-modal-qty-minus]') && draft) { if (draft.qty > 1) draft.qty--; paintModal(); }
+    if (t.closest('[data-modal-qty-plus]') && draft) { if (draft.qty < 9) draft.qty++; paintModal(); }
+    if (t.closest('[data-modal-confirm]') && draft) {
+      const sin = [];
+      $$('[data-modal-ing-list] input[type="checkbox"]').forEach((cb) => {
+        if (!cb.checked) sin.push(draft.ings[Number(cb.getAttribute('data-ing-idx'))]);
+      });
+      const unit = draft.variante === 'media' ? draft.precioMedia : draft.precioEntera;
+      const key = (l) => `${l.slug}|${l.variante ?? ''}|${(l.sin || []).join(',')}`;
+      const nueva = { slug: draft.slug, nombre: draft.nombre, precio: unit, variante: draft.variante, qty: draft.qty, sin };
+      const existing = cart.find((l) => key(l) === key(nueva));
+      existing ? (existing.qty = Math.min(9, existing.qty + nueva.qty)) : cart.push(nueva);
+      save(cart);
+      closeModal();
+      openDrawer();
+    }
+  });
+
+  // ───────────────────────── enviar por WhatsApp ─────────────────────────
+  $('[data-cart-send]')?.addEventListener('click', () => {
+    if (!cart.length) return;
+    const mesa = getMesa();
+    const nota = ($('[data-cart-note]')?.value || '').trim().slice(0, 200);
+    const sep = '——————————';
+    const L = ['🛒 *PEDIDO BOCATITOS*'];
+    if (mesa) L.push(`📍 Mesa *${mesa}*`);
+    L.push(sep);
+    cart.forEach((l) => {
+      const variante = l.variante ? ` (${l.variante})` : '';
+      L.push(`${l.qty}× *${l.nombre}*${variante} — ${eur(l.precio * l.qty)}`);
+      if (l.sin?.length) L.push(`   ⚠️ sin ${l.sin.join(', sin ')}`);
+    });
+    L.push(sep);
+    L.push(`💶 *TOTAL: ${eur(total())}*`);
+    if (nota) L.push(`📝 Nota: ${nota}`);
+    const url = `https://wa.me/${phone}?text=${encodeURIComponent(L.join('\n'))}`;
+    window.open(url, '_blank', 'noopener');
+  });
+
+  // ───────────────────────── init ─────────────────────────
+  render();
+</script>
+
+<style>
+  .variant-btn.is-active {
+    background: var(--yellow);
+    color: var(--black);
+    border-color: var(--yellow);
+  }
+  .cart-fab {
+    box-shadow: 0 12px 30px -8px rgba(255, 224, 19, 0.4);
+  }
+  /* Reserva de espacio para que el flotante no tape el final de la página. */
+  :global(body.has-cart-fab) {
+    padding-bottom: 5.5rem;
+  }
+  .cart-drawer,
+  .cart-modal .max-h-\[88vh\] {
+    animation: cart-slide-in 0.28s var(--ease-out-expo);
+  }
+  @keyframes cart-slide-in {
+    from { transform: translateX(24px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cart-drawer, .cart-modal .max-h-\[88vh\] { animation: none; }
+  }
+</style>

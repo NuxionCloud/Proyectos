@@ -1,0 +1,115 @@
+---
+/**
+ * DishI18nRuntime · cliente que aplica el cambio de idioma a:
+ *  1. UI strings (nodos con data-i18n / data-i18n-html · diccionario inline)
+ *  2. Bases de plato (data-i18n-base · diccionario inline)
+ *  3. Nombres e ingredientes de plato (data-dish-slug · fetch de dishes.json)
+ *
+ * Disparado por el evento `localechange` que emite LangSwitcher.
+ * Se ejecuta también al cargar la página si hay locale guardado en localStorage.
+ */
+import { ui } from '@i18n/ui';
+
+// Todo el diccionario UI se inlinea en el HTML (es pequeño ~5 KB) para
+// evitar un fetch adicional y que el cambio de idioma sea instantáneo.
+const UI_STRINGS = ui;
+---
+
+<script define:vars={{ UI_STRINGS }}>
+  let DISHES = null;
+  let loading = null;
+
+  const STORAGE_KEY = 'bocatitos.lang';
+
+  const loadDishes = async () => {
+    if (DISHES) return DISHES;
+    if (loading) return loading;
+    loading = fetch('/i18n/dishes.json')
+      .then((r) => r.json())
+      .then((data) => {
+        DISHES = data;
+        return data;
+      })
+      .catch((err) => {
+        console.warn('No se pudieron cargar las traducciones de los platos', err);
+        return {};
+      });
+    return loading;
+  };
+
+  /** Resuelve una clave i18n con fallback a español. */
+  const tr = (locale, key) =>
+    UI_STRINGS[locale]?.[key] ?? UI_STRINGS.es?.[key] ?? key;
+
+  /** 1) Traduce nodos UI marcados con data-i18n / data-i18n-html. */
+  const applyUiStrings = (locale) => {
+    document.querySelectorAll('[data-i18n]').forEach((el) => {
+      const key = el.getAttribute('data-i18n');
+      el.textContent = tr(locale, key);
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach((el) => {
+      const key = el.getAttribute('data-i18n-html');
+      el.innerHTML = tr(locale, key);
+    });
+    document.querySelectorAll('[data-i18n-attr]').forEach((el) => {
+      // Formato: data-i18n-attr="aria-label:header.open_menu"
+      const raw = el.getAttribute('data-i18n-attr');
+      raw.split(';').forEach((pair) => {
+        const [attr, key] = pair.split(':').map((s) => s.trim());
+        if (attr && key) el.setAttribute(attr, tr(locale, key));
+      });
+    });
+  };
+
+  /** 2) Traduce la etiqueta "base" del plato. */
+  const applyBases = (locale) => {
+    document.querySelectorAll('[data-i18n-base]').forEach((el) => {
+      const baseKey = el.getAttribute('data-i18n-base');
+      el.textContent = tr(locale, `base.${baseKey}`);
+    });
+  };
+
+  /** 3) Traduce nombres e ingredientes de plato. */
+  const applyDishes = async (locale) => {
+    const cards = document.querySelectorAll('[data-dish-slug]');
+    if (cards.length === 0) return;
+
+    const dishes = await loadDishes();
+    cards.forEach((card) => {
+      const raw = card.getAttribute('data-dish-slug');
+      // Tolera prefijo numérico "01-" por si el render usa Astro slug crudo.
+      const slug = raw.replace(/^\d+-/, '');
+      const entry = dishes[slug];
+      if (!entry) return;
+
+      const nombreEl = card.querySelector('[data-i18n-nombre]');
+      if (nombreEl && entry.nombre?.[locale]) {
+        nombreEl.textContent = entry.nombre[locale];
+      }
+
+      const ingList = card.querySelector('[data-i18n-ingredientes]');
+      if (ingList && Array.isArray(entry.ingredientes?.[locale])) {
+        ingList.innerHTML = entry.ingredientes[locale]
+          .map((ing) => `<li>· ${ing.replace(/</g, '&lt;')}</li>`)
+          .join('');
+      }
+    });
+  };
+
+  /** Pipeline completo. */
+  const applyLocale = async (locale) => {
+    document.documentElement.setAttribute('lang', locale);
+    applyUiStrings(locale);
+    applyBases(locale);
+    await applyDishes(locale);
+  };
+
+  // Aplicar al cargar (por si la página se abre con un idioma ya guardado).
+  const initial = localStorage.getItem(STORAGE_KEY) || 'es';
+  if (initial !== 'es') applyLocale(initial);
+
+  // Escuchar cambios.
+  document.addEventListener('localechange', (e) => {
+    applyLocale(e.detail.locale);
+  });
+</script>

@@ -1,0 +1,193 @@
+---
+/**
+ * Header · sticky con logo + nav + CTAs.
+ * Detecta scroll >50px y añade clase .is-scrolled (sombra inferior).
+ * Mobile: hamburguesa abre drawer fullscreen.
+ *
+ * Nav según briefing actualizado:
+ *  Inicio · Carta · Recepción pedidos · Reservas
+ */
+import LangSwitcher from './LangSwitcher.astro';
+import Logo from '@components/ui/Logo.astro';
+
+const pathname = Astro.url.pathname;
+
+const nav = [
+  { label: 'Inicio',         href: '/',         i18n: 'nav.home'    },
+  { label: 'Carta',          href: '/carta',    i18n: 'nav.menu'    },
+  { label: 'Reseñas',        href: '/#resenas', i18n: 'nav.reviews' },
+  { label: 'Sobre nosotros', href: '/#about',   i18n: 'nav.about'   },
+];
+
+const isActive = (href: string) => {
+  if (href.includes('#')) return false;          // anchors no marcan página activa
+  if (href === '/') return pathname === '/';
+  return pathname.startsWith(href);
+};
+---
+
+<header
+  class="header sticky top-0 z-[100] bg-black border-b-[3px] border-red transition-shadow duration-base"
+  data-header
+>
+  <div class="wrap flex items-center justify-between gap-md py-xs md:py-sm lg:grid lg:grid-cols-[1fr_auto_1fr]">
+    <!-- Logo oficial -->
+    <a href="/" class="logo inline-flex items-center lg:justify-self-start" aria-label="Bocatitos · inicio">
+      <Logo size="sm" eager />
+    </a>
+
+    <!-- Nav desktop (centrado) -->
+    <nav class="hidden lg:flex items-center justify-center gap-lg lg:justify-self-center" aria-label="Principal">
+      {
+        nav.map(({ label, href, i18n }) => (
+          <a
+            href={href}
+            data-i18n={i18n}
+            class={`nav-link relative font-condensed text-lg tracking-widest uppercase transition-colors ${isActive(href) ? 'text-yellow' : 'text-white/85 hover:text-yellow'}`}
+            aria-current={isActive(href) ? 'page' : undefined}
+          >
+            {label}
+            {isActive(href) && <span class="absolute -bottom-1 left-0 right-0 h-[2px] bg-yellow" aria-hidden="true" />}
+          </a>
+        ))
+      }
+    </nav>
+
+    <!-- CTAs desktop + lang switcher -->
+    <div class="hidden lg:flex items-center gap-xs lg:justify-self-end">
+      <LangSwitcher />
+      <button
+        type="button"
+        class="btn-primary bg-yellow text-black px-md py-2xs font-condensed text-base tracking-widest uppercase hover:bg-white transition-colors inline-flex items-center gap-2xs"
+        aria-label="Abrir el pedido"
+        data-i18n-attr="aria-label:cart.open_aria"
+        data-cart-open
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="16" height="16" aria-hidden="true">
+          <path d="M6 7h12l-1.2 12.2a1.6 1.6 0 0 1-1.6 1.4H8.8a1.6 1.6 0 0 1-1.6-1.4L6 7Z" />
+          <path d="M9 9V6a3 3 0 0 1 6 0v3" />
+        </svg>
+        <span data-i18n="nav.order">Pedido</span>
+        <span class="bg-black text-yellow rounded-full min-w-5 h-5 px-1 inline-flex items-center justify-center text-xs" data-cart-count>0</span>
+      </button>
+    </div>
+
+    <!-- Mobile: pedido + hamburguesa -->
+    <div class="flex items-center gap-2xs lg:hidden">
+      <button
+        type="button"
+        class="relative p-2xs text-white hover:text-yellow transition-colors"
+        aria-label="Abrir el pedido"
+        data-i18n-attr="aria-label:cart.open_aria"
+        data-cart-open
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="26" height="26" aria-hidden="true">
+          <path d="M6 7h12l-1.2 12.2a1.6 1.6 0 0 1-1.6 1.4H8.8a1.6 1.6 0 0 1-1.6-1.4L6 7Z" />
+          <path d="M9 9V6a3 3 0 0 1 6 0v3" />
+        </svg>
+        <span class="absolute -top-1 -right-1 bg-yellow text-black rounded-full min-w-5 h-5 px-1 inline-flex items-center justify-center text-xs font-semibold" data-cart-count>0</span>
+      </button>
+      <button
+        type="button"
+        class="p-2xs text-white"
+        aria-label="Abrir menú"
+        data-i18n-attr="aria-label:header.open_menu"
+        aria-controls="mobile-drawer"
+        aria-expanded="false"
+        data-menu-toggle
+      >
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true">
+          <path d="M3 6h18M3 12h18M3 18h18" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Drawer mobile -->
+<div
+  id="mobile-drawer"
+  class="mobile-drawer fixed inset-0 z-[200] bg-black/95 backdrop-blur-md text-white hidden flex-col"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Menú móvil"
+  data-drawer
+>
+  <div class="wrap flex items-center justify-between py-sm border-b-[3px] border-red">
+    <Logo size="sm" />
+    <button
+      type="button"
+      class="p-2xs text-white"
+      aria-label="Cerrar menú"
+      data-i18n-attr="aria-label:header.close_menu"
+      data-menu-close
+    >
+      <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true">
+        <path d="M6 6l12 12M18 6L6 18" />
+      </svg>
+    </button>
+  </div>
+  <nav class="flex-1 wrap flex flex-col justify-center gap-md py-xl" aria-label="Móvil">
+    {
+      nav.map(({ label, href, i18n }) => (
+        <a
+          href={href}
+          data-i18n={i18n}
+          class={`font-display text-4xl uppercase transition-colors ${isActive(href) ? 'text-yellow' : 'text-white hover:text-yellow'}`}
+          aria-current={isActive(href) ? 'page' : undefined}
+        >
+          {label}
+        </a>
+      ))
+    }
+  </nav>
+  <div class="wrap py-lg border-t border-white/10 flex flex-col gap-xs">
+    <button type="button" class="block w-full text-center bg-yellow text-black px-md py-sm font-condensed text-xl tracking-widest uppercase" data-cart-open>
+      <span data-i18n="cart.title">Tu pedido</span> · <span data-cart-count>0</span> →
+    </button>
+  </div>
+</div>
+
+<script>
+  // Scroll-driven shadow + drawer toggle.
+  // Vanilla, no framework, ~1KB.
+  const header = document.querySelector<HTMLElement>('[data-header]');
+  const onScroll = () => {
+    if (!header) return;
+    header.classList.toggle('is-scrolled', window.scrollY > 50);
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  const drawer = document.querySelector<HTMLElement>('[data-drawer]');
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const close = document.querySelector<HTMLButtonElement>('[data-menu-close]');
+
+  const openDrawer = () => {
+    if (!drawer || !toggle) return;
+    drawer.classList.remove('hidden');
+    drawer.classList.add('flex');
+    toggle.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  };
+  const closeDrawer = () => {
+    if (!drawer || !toggle) return;
+    drawer.classList.add('hidden');
+    drawer.classList.remove('flex');
+    toggle.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  };
+
+  toggle?.addEventListener('click', openDrawer);
+  close?.addEventListener('click', closeDrawer);
+  drawer?.querySelectorAll('a').forEach((a) => a.addEventListener('click', closeDrawer));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && drawer && !drawer.classList.contains('hidden')) closeDrawer();
+  });
+</script>
+
+<style>
+  .header.is-scrolled {
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.8);
+  }
+</style>

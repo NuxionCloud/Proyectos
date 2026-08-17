@@ -1,0 +1,164 @@
+---
+/**
+ * Footer · logo grande + 3 columnas (nav/local/redes) + newsletter + marquee inferior.
+ * Info del local sale de src/content/settings/local.json
+ */
+import { getEntry } from 'astro:content';
+import Marquee from './Marquee.astro';
+import Logo from '@components/ui/Logo.astro';
+
+const localEntry = await getEntry('settings', 'local');
+const local = localEntry?.data;
+
+const nav = [
+  { label: 'Inicio', href: '/',      i18n: 'nav.home' },
+  { label: 'Carta',  href: '/carta', i18n: 'nav.menu' },
+];
+
+const legal = [
+  { label: 'Aviso legal', href: '/aviso-legal' },
+  { label: 'Privacidad', href: '/privacidad' },
+  { label: 'Cookies', href: '/cookies' },
+];
+
+const year = new Date().getFullYear();
+---
+
+<footer class="footer bg-black text-white relative" role="contentinfo">
+  <!-- Pre-footer grueso -->
+  <div class="wrap py-2xl grid gap-xl md:gap-2xl md:grid-cols-12">
+    <!-- Brand + tagline -->
+    <div class="md:col-span-5">
+      <a href="/" class="inline-flex items-center" aria-label="Bocatitos · inicio">
+        <Logo size="xl" />
+      </a>
+      <p class="mt-md font-condensed text-2xl uppercase tracking-wider text-white/70 max-w-sm leading-tight" data-i18n="foo.tagline">
+        El mejor sabor de Sevilla.
+      </p>
+    </div>
+
+    <!-- Nav -->
+    <nav class="md:col-span-2" aria-label="Footer nav">
+      <h3 class="font-condensed text-base tracking-widest uppercase text-yellow mb-md" data-i18n="foo.nav">Navegación</h3>
+      <ul class="space-y-xs">
+        {nav.map(({ label, href, i18n }) => (
+          <li><a href={href} data-i18n={i18n} class="text-white/80 hover:text-yellow transition-colors">{label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <!-- Local -->
+    <div class="md:col-span-3">
+      <h3 class="font-condensed text-base tracking-widest uppercase text-yellow mb-md" data-i18n="foo.local">El local</h3>
+      <address class="not-italic text-sm text-white/80 space-y-xs">
+        <p>{local?.direccion}<br />{local?.codigoPostal} {local?.ciudad}</p>
+        <p>
+          <a href={`tel:${local?.telefono.replace(/\s/g, '')}`} class="hover:text-yellow transition-colors">{local?.telefono}</a>
+        </p>
+        {local?.email && (
+          <p><a href={`mailto:${local.email}`} class="hover:text-yellow transition-colors">{local.email}</a></p>
+        )}
+      </address>
+      <details class="mt-md text-sm text-white/70">
+        <summary class="cursor-pointer hover:text-yellow font-condensed uppercase tracking-widest" data-i18n="foo.hours_toggle">Horario</summary>
+        <ul class="mt-xs space-y-2xs pl-md text-xs">
+          {local && Object.entries(local.horario).map(([dia, horas]) => (
+            <li><span class="capitalize text-white/50">{dia}:</span> {horas}</li>
+          ))}
+        </ul>
+      </details>
+    </div>
+
+    <!-- Social -->
+    <div class="md:col-span-2">
+      <h3 class="font-condensed text-base tracking-widest uppercase text-yellow mb-md" data-i18n="foo.social">Síguenos</h3>
+      <ul class="space-y-xs text-sm">
+        {local?.instagram && (
+          <li>
+            <a href={`https://instagram.com/${local.instagram}`} target="_blank" rel="noopener" class="inline-flex items-center gap-2xs text-white/80 hover:text-yellow transition-colors">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 1.2.1 1.8.3 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 1.2-.3 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-1.2-.1-1.8-.3-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8c.1-1.2.3-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2Zm0 1.6c-3.1 0-3.5 0-4.7.1-1.1.1-1.7.2-2.1.4-.5.2-.9.4-1.3.8-.4.4-.6.8-.8 1.3-.2.4-.3 1-.4 2.1-.1 1.2-.1 1.5-.1 4.7s0 3.5.1 4.7c.1 1.1.2 1.7.4 2.1.2.5.4.9.8 1.3.4.4.8.6 1.3.8.4.2 1 .3 2.1.4 1.2.1 1.5.1 4.7.1s3.5 0 4.7-.1c1.1-.1 1.7-.2 2.1-.4.5-.2.9-.4 1.3-.8.4-.4.6-.8.8-1.3.2-.4.3-1 .4-2.1.1-1.2.1-1.5.1-4.7s0-3.5-.1-4.7c-.1-1.1-.2-1.7-.4-2.1-.2-.5-.4-.9-.8-1.3-.4-.4-.8-.6-1.3-.8-.4-.2-1-.3-2.1-.4-1.2-.1-1.5-.1-4.7-.1Zm0 2.7c-2.9 0-5.3 2.4-5.3 5.3s2.4 5.3 5.3 5.3 5.3-2.4 5.3-5.3-2.4-5.3-5.3-5.3Zm0 8.7c-1.9 0-3.4-1.5-3.4-3.4S10.1 8.4 12 8.4s3.4 1.5 3.4 3.4-1.5 3.4-3.4 3.4Zm6.7-8.9c0 .7-.6 1.3-1.3 1.3s-1.3-.6-1.3-1.3.6-1.3 1.3-1.3 1.3.6 1.3 1.3Z"/></svg>
+              Instagram
+            </a>
+          </li>
+        )}
+        {local?.facebook && (
+          <li>
+            <a href={`https://facebook.com/${local.facebook}`} target="_blank" rel="noopener" class="inline-flex items-center gap-2xs text-white/80 hover:text-yellow transition-colors">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.3 0-1.7.8-1.7 1.6V12h2.9l-.5 2.9h-2.4v7A10 10 0 0 0 22 12Z"/></svg>
+              Facebook
+            </a>
+          </li>
+        )}
+        {local?.tiktok && (
+          <li>
+            <a href={`https://tiktok.com/@${local.tiktok}`} target="_blank" rel="noopener" class="inline-flex items-center gap-2xs text-white/80 hover:text-yellow transition-colors">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.6 6.7a4.8 4.8 0 0 1-2.9-1 4.8 4.8 0 0 1-2-3.2H11v13.1a2.9 2.9 0 1 1-2-2.7v-3.4a6.2 6.2 0 1 0 5.3 6.1V9.5a8 8 0 0 0 5.3 1.8V8a4.7 4.7 0 0 1 0-1.3Z"/></svg>
+              TikTok
+            </a>
+          </li>
+        )}
+        {local?.youtube && (
+          <li>
+            <a href={`https://youtube.com/@${local.youtube}`} target="_blank" rel="noopener" class="inline-flex items-center gap-2xs text-white/80 hover:text-yellow transition-colors">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.5a3 3 0 0 0-2.1-2.1C19.5 4 12 4 12 4s-7.5 0-9.4.4A3 3 0 0 0 .5 6.5C.1 8.5.1 12 .1 12s0 3.5.4 5.5a3 3 0 0 0 2.1 2.1c1.9.4 9.4.4 9.4.4s7.5 0 9.4-.4a3 3 0 0 0 2.1-2.1c.4-2 .4-5.5.4-5.5s0-3.5-.4-5.5ZM9.6 15.6V8.4l6.2 3.6-6.2 3.6Z"/></svg>
+              YouTube
+            </a>
+          </li>
+        )}
+        {local?.spotify && (
+          <li>
+            <a href={`https://open.spotify.com/user/${local.spotify}`} target="_blank" rel="noopener" class="inline-flex items-center gap-2xs text-white/80 hover:text-yellow transition-colors">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.6 14.4a.6.6 0 0 1-.9.2c-2.4-1.5-5.5-1.8-9.1-1a.6.6 0 1 1-.3-1.2c4-.9 7.4-.5 10.1 1.1.3.2.4.6.2.9Zm1.2-2.7a.8.8 0 0 1-1.1.3c-2.8-1.7-7-2.2-10.3-1.2a.8.8 0 1 1-.4-1.5c3.8-1.1 8.4-.6 11.6 1.4.4.2.5.7.2 1Zm.1-2.8c-3.3-2-8.8-2.1-12-1.2a.9.9 0 1 1-.5-1.8c3.7-1.1 9.7-.9 13.5 1.4a.9.9 0 1 1-1 1.6Z"/></svg>
+              Spotify
+            </a>
+          </li>
+        )}
+        <li>
+          <a href={`https://wa.me/${local?.whatsapp}`} target="_blank" rel="noopener" class="inline-flex items-center gap-2xs text-white/80 hover:text-whatsapp transition-colors">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="text-whatsapp"><path d="M20.5 3.5A11.5 11.5 0 0 0 3.6 19l-1.1 4 4.1-1.1A11.5 11.5 0 1 0 20.5 3.5Z"/></svg>
+            WhatsApp
+          </a>
+        </li>
+        <li>
+          <a href={local?.mapaLink} target="_blank" rel="noopener" class="inline-flex items-center gap-2xs text-white/80 hover:text-yellow transition-colors">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s-7-7-7-12a7 7 0 1 1 14 0c0 5-7 12-7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            <span data-i18n="loc.map_cta">Cómo llegar</span>
+          </a>
+        </li>
+      </ul>
+
+      <ul class="mt-lg space-y-2xs text-xs">
+        {legal.map(({ label, href }) => (
+          <li><a href={href} class="text-white/50 hover:text-yellow transition-colors">{label}</a></li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <!-- Marquee inferior -->
+  <Marquee
+    items={[`© ${year} Bocatitos`, 'Hecho en Sevilla', `Mucho más que un bocata`, 'Desayuno · Tapas · Street Food']}
+    separator="·"
+    speed="slow"
+    bg="bg-white"
+    text="text-black"
+    font="display"
+    size="text-xl md:text-2xl"
+    bordered={true}
+    ariaLabel="Copyright"
+  />
+
+  <style>
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+  </style>
+</footer>

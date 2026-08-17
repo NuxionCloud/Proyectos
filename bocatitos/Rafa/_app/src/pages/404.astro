@@ -1,0 +1,25 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Página no encontrada" description="Aquí no hay bocata. Vuelve al inicio.">
+  <main id="main" class="min-h-[60vh] flex items-center bg-black text-white">
+    <div class="wrap text-center py-2xl">
+      <p class="font-condensed text-yellow text-lg tracking-widest uppercase">Error 404</p>
+      <h1 class="font-display uppercase mt-md leading-[0.95] text-[clamp(4rem,12vw,9rem)]">
+        Aquí <span class="text-red">no hay</span><br />bocata.
+      </h1>
+      <p class="mt-md text-white/70 max-w-md mx-auto">
+        Esta página se ha perdido por el barrio. Vuelve al inicio o pásate a la carta.
+      </p>
+      <div class="mt-lg flex flex-wrap items-center justify-center gap-xs">
+        <a href="/" class="inline-flex items-center gap-2xs bg-red text-white px-md py-sm font-condensed text-lg tracking-widest uppercase hover:bg-red-dark transition-colors">
+          <span aria-hidden="true">←</span> <span>Volver al inicio</span>
+        </a>
+        <a href="/carta" class="inline-flex items-center gap-2xs border-2 border-yellow text-yellow px-md py-sm font-condensed text-lg tracking-widest uppercase hover:bg-yellow hover:text-black transition-colors">
+          <span>Ver carta</span> <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </main>
+</BaseLayout>

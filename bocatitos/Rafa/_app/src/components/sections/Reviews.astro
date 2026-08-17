@@ -1,0 +1,89 @@
+---
+/**
+ * Reviews · "Lo que dicen de nosotros" (petición reunión 13-08-2026).
+ *
+ * ⚠️ Orden pedido por el cliente: el CTA "Deja tu reseña en Google" va
+ * ANTES de las citas — el objetivo del negocio es captar reseñas.
+ *
+ * TODO producción: sustituir el enlace por el de escribir reseña con
+ * place_id real: https://search.google.com/local/writereview?placeid=…
+ * Las citas son reseñas reales de Google (se muestran solo en español).
+ */
+import { getEntry } from 'astro:content';
+
+const local = (await getEntry('settings', 'local'))?.data;
+const reviewLink =
+  local?.mapaLink ?? 'https://maps.google.com/?q=Bocatitos+Sevilla';
+
+const reviews = [
+  {
+    autor: 'Jorge R.',
+    meta: 'Google Reviews · hace 1 mes',
+    texto:
+      '“Local pequeño pero un sabor enorme. He desayunado, comido tapa y cenado bocata aquí. Cariño en cada detalle.”',
+  },
+  {
+    autor: 'Iván R.',
+    meta: 'Google Reviews · hace 2 meses',
+    texto:
+      '“De turismo en Sevilla y descubrimos esta joya gracias a Instagram. Volveremos seguro.”',
+  },
+  {
+    autor: 'Ana S.',
+    meta: 'Google Reviews · hace 3 semanas',
+    texto:
+      '“Trato familiar, ingredientes que se notan. Los hot dogs son los más buenos del barrio.”',
+  },
+];
+---
+
+<section id="resenas" class="reviews bg-darker text-white py-2xl" aria-labelledby="rev-h">
+  <div class="wrap text-center">
+    <p class="font-condensed text-yellow text-lg tracking-widest uppercase inline-flex items-center gap-xs">
+      <span aria-hidden="true" class="text-yellow">★★★★★</span>
+      <span data-i18n="reviews.eyebrow">4,7 · Google Reviews</span>
+    </p>
+    <h2 id="rev-h" class="font-display uppercase mt-md leading-[0.95] text-[clamp(2rem,5.5vw,4rem)]">
+      <span data-i18n="reviews.title_a">Lo que dicen de</span>
+      <span class="inline-block bg-yellow text-black px-xs" data-i18n="reviews.title_b">nosotros.</span>
+    </h2>
+
+    <!-- CTA primero: el cliente quiere reseñas por encima de todo -->
+    <p class="mt-md text-white/75 max-w-xl mx-auto" data-i18n="reviews.cta_lead">
+      ¿Has comido con nosotros? Tu reseña nos ayuda muchísimo.
+    </p>
+    <a
+      href={reviewLink}
+      target="_blank"
+      rel="noopener"
+      class="mt-md inline-flex items-center gap-2xs bg-yellow text-black px-lg py-sm font-condensed text-lg tracking-widest uppercase hover:bg-white transition-colors"
+    >
+      <span aria-hidden="true">★</span>
+      <span data-i18n="reviews.cta">Deja tu reseña en Google</span>
+    </a>
+    <p class="mt-xs text-sm text-white/50" data-i18n="reviews.count">
+      Más de 300 reseñas en Google · Bocatitos Sevilla
+    </p>
+
+    <!-- Citas -->
+    <div class="mt-xl grid gap-md md:grid-cols-3 text-left">
+      {
+        reviews.map((r) => (
+          <blockquote class="border-2 border-white/10 bg-dark p-md hover:border-yellow transition-colors">
+            <p class="text-yellow text-sm" aria-hidden="true">★★★★★</p>
+            <p class="mt-xs text-white/85 text-sm italic leading-relaxed">{r.texto}</p>
+            <footer class="mt-md flex items-center gap-xs">
+              <span class="w-9 h-9 rounded-full bg-yellow text-black font-display inline-flex items-center justify-center" aria-hidden="true">
+                {r.autor.charAt(0)}
+              </span>
+              <div>
+                <cite class="not-italic text-white text-sm font-semibold">{r.autor}</cite>
+                <p class="text-white/45 text-xs">{r.meta}</p>
+              </div>
+            </footer>
+          </blockquote>
+        ))
+      }
+    </div>
+  </div>
+</section>
